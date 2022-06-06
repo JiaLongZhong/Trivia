@@ -1,0 +1,13 @@
+{
+    "name": "saj39/it490",
+    "type": "test",
+    "authors": [
+        {
+            "name": "SmitJoshi",
+            "email": "saj39@njit.edu"
+        }
+    ],
+    "require": {
+        "php-amqplib/php-amqplib": "^2.10"
+    }
+}
