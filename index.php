@@ -35,8 +35,13 @@
 <h1>Homepage</h1>
     <p>To be the best, you will have to beat the best!
         Join the competitive environment of quizzes where players get to challenge the world leaderboard. Show off your glory by showcasing your achievement through hard-earned badges. Not in a competitive mood. No problem, users can create trivia and play with their family and friends. Join our wonderful Trivia community for the sake of glory and entertainment by logging in with your email. New to the platform, no problem, sign up today to join the community:</p>
-        <button type="button" href="login.php">Login</button>
-        <button type="button" href="register.php">Register Here</button>
+    <form action="login.php">
+        <input type="submit" value="Login" />
+    </form>
+    <form action="register.php">
+        <input type="submit" value="Sign Up" />
+    </form>
+
 
 </div>
 <footer class="py-3 my-4">
