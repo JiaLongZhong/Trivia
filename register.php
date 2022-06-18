@@ -21,13 +21,13 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link" href="login.php">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Signup</a>
+                    <a class="nav-link active" aria-current="page" href="register.php">Signup</a>
                 </li>
             </ul>
         </div>
@@ -35,63 +35,62 @@
 </nav>
 
 <div class="container">
-    
-<div id="r-form">
-    <form method="post" id="reg-test">
-        <label for="fname">First Name</label>
-        <input type="text" id="fname" name="fname" value="<?php if (!isset($_POST["fname"])) {
-            echo '';
-        } else {
-            echo $_POST["fname"];
-        } ?>" required />
-        <br>
-        <label for="lname">Last Name</label>
-        <input type="text" id="lname" name="lname" value="<?php if (!isset($_POST["lname"])) {
-            echo '';
-        } else {
-            echo $_POST["lname"];
-        } ?>" required />
-        <br>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" value="<?php if (!isset($_POST["username"])) {
-            echo '';
-        } else {
-            echo $_POST["username"];
-        } ?>" required />
-        <br>
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" value="<?php if (!isset($_POST["email"])) {
-            echo '';
-        } else {
-            echo $_POST["email"];
-        } ?>" required />
-        <br>
-        <label for="bday">Birthday</label>
-        <input type="date" id="bday" name="bday" value="<?php if (!isset($_POST["bday"])) {
-            echo '';
-        } else {
-            echo $_POST["bday"];
-        } ?>" required />
-        <br>
-        <label for="pass">Password</label>
-        <input type="password" id="pass" name="pass" required />
-        <br>
-        <label for="pass1">Confirm Password</label>
-        <input type="password" id="pass1" name="pass1" required />
-        <br>
-        <input type="submit" id="r_submit" name="submit" value="Register" />
-    </form>
-</div>
+    <div id="r-form">
+        <form method="post" id="reg-test">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" name="fname" value="<?php if (!isset($_POST["fname"])) {
+                echo '';
+            } else {
+                echo $_POST["fname"];
+            } ?>" required />
+            <br>
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" name="lname" value="<?php if (!isset($_POST["lname"])) {
+                echo '';
+            } else {
+                echo $_POST["lname"];
+            } ?>" required />
+            <br>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" value="<?php if (!isset($_POST["username"])) {
+                echo '';
+            } else {
+                echo $_POST["username"];
+            } ?>" required />
+            <br>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="<?php if (!isset($_POST["email"])) {
+                echo '';
+            } else {
+                echo $_POST["email"];
+            } ?>" required />
+            <br>
+            <label for="bday">Birthday</label>
+            <input type="date" id="bday" name="bday" value="<?php if (!isset($_POST["bday"])) {
+                echo '';
+            } else {
+                echo $_POST["bday"];
+            } ?>" required />
+            <br>
+            <label for="pass">Password</label>
+            <input type="password" id="pass" name="pass" required />
+            <br>
+            <label for="pass1">Confirm Password</label>
+            <input type="password" id="pass1" name="pass1" required />
+            <br>
+            <input type="submit" id="r_submit" name="submit" value="Register" />
+        </form>
+    </div>
 </div>
 
-    <footer class="py-3 my-4">
-        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Login</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Sign Up</a></li>
-        </ul>
-        <p1 class="text-center text-muted">&copy;2022 Copyright@JiaZhong</p1>
-    </footer>
+<footer class="py-3 my-4">
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><a href="index.php" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="login.php" class="nav-link px-2 text-muted">Login</a></li>
+        <li class="nav-item"><a href="register.php" class="nav-link px-2 text-muted">Sign Up</a></li>
+    </ul>
+    <p1 class="text-center text-muted">&copy;2022 Copyright @JiaZhong @JavierArtiga @SmitJoshi @DominicQuitoni @EmilyHontiveros</p1>
+</footer>
 
 
 
@@ -191,22 +190,20 @@ if (isset($_POST["submit"])) {
         else {
             echo "something went wrong";
         }
-/*          $connection = new AMQPStreamConnection($BROKER_HOST, $BROKER_PORT, $USER, $PASSWORD, $VHOST);
-            $channel = $connection->channel();
-            $channel->queue_declare($QUEUE, false, true, false, false);
-            $channel->exchange_declare($EXCHANGE, AMQPExchangeType::DIRECT, false, true, false);
-            $channel->queue_bind($QUEUE, $EXCHANGE);
+        /*          $connection = new AMQPStreamConnection($BROKER_HOST, $BROKER_PORT, $USER, $PASSWORD, $VHOST);
+                    $channel = $connection->channel();
+                    $channel->queue_declare($QUEUE, false, true, false, false);
+                    $channel->exchange_declare($EXCHANGE, AMQPExchangeType::DIRECT, false, true, false);
+                    $channel->queue_bind($QUEUE, $EXCHANGE);
+                    $messageBody = json_encode($reg_arr, JSON_PRETTY_PRINT);
+                    $message = new AMQPMessage($messageBody, array('content_type' => 'application/json', 'delievery_mode' => AMQPMessage::DELIEVERY_MODE_PERSISTENT));
+                    $channel->basic_publish($message, $EXCHANGE);
+                    $channel->close();
+                    $connection->close(); */
 
-            $messageBody = json_encode($reg_arr, JSON_PRETTY_PRINT);
-            $message = new AMQPMessage($messageBody, array('content_type' => 'application/json', 'delievery_mode' => AMQPMessage::DELIEVERY_MODE_PERSISTENT));
-            $channel->basic_publish($message, $EXCHANGE);
-
-            $channel->close();
-            $connection->close(); */
-           
-        }
     }
-    ?>
+}
+?>
 
 
 </body>
