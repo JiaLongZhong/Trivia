@@ -1,0 +1,39 @@
+<table><tr><td> <em>Assignment: </em> M4-Contributions</td></tr>
+<tr><td> <em>Student: </em> Jia Zhong(jlz6)</td></tr>
+<tr><td> <em>Generated: </em> 6/19/2022 2:41:20 PM</td></tr>
+<tr><td> <em>Grading Link: </em> <a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IT490-450-M22/m4-contributions/grade/jlz6" target="_blank">Grading</a></td></tr></table>
+<table><tr><td> <em>Instructions: </em> <p>Each week I&#39;ll record your contributions to the class/group following the same outline.
+You&#39;ll export this assignment to markdown (or download it as a markdown file) and add it to your group&#39;s Github.
+You&#39;ll want to change the file name to include your ucid so it doesn&#39;t conflict with anyone else&#39;s files if it&#39;s in the same directory.</p>
+<p>It&#39;s required to keep this branch in sync with all team members each module/week (you shouldn&#39;t cause anyone to lose their work).
+ </p>
+</td></tr></table>
+<table><tr><td> <em>Deliverable 1: </em> Add screenshots of individual Issues (github recorded topics) that you worked on this week </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="http://via.placeholder.com/400x120/009955/fff?text=Complete"></td></tr>
+<tr><td><table><tr><td> <em>Sub-Task 1: </em> Add a screenshot of each issue you worked on, include the link, and the status of the issue per the checklist</td></tr>
+<tr><td><table><tr><td><img width="768px" src="https://user-images.githubusercontent.com/55101058/174494968-0a87804f-41ef-410f-a3a1-bd16b37cf930.png"/></td></tr>
+<tr><td> <em>Caption:</em> <p>jlz6 06/19/2022 Creating Navbar &amp; Footer for Index.php (Complete)<br></p>
+</td></tr>
+<tr><td><img width="768px" src="https://user-images.githubusercontent.com/55101058/174494975-00e7d6be-5950-4f08-b3e2-11adec7aa0d2.png"/></td></tr>
+<tr><td> <em>Caption:</em> <p>jlz6 06/19/2022 Creating Navbar &amp; Footer for register.php (Complete)<br></p>
+</td></tr>
+<tr><td><img width="768px" src="https://user-images.githubusercontent.com/55101058/174494978-5aa66345-437f-4c2d-92fa-4ccc88c422dc.png"/></td></tr>
+<tr><td> <em>Caption:</em> <p>jlz6 06/19/2022 Creating Navbar &amp; Footer for login.php (Complete)<br></p>
+</td></tr>
+<tr><td><img width="768px" src="https://user-images.githubusercontent.com/55101058/174494989-9414e1e2-4e3c-43fb-822f-b68e7acaf862.png"/></td></tr>
+<tr><td> <em>Caption:</em> <p>jlz6 06/19/2022 Creating Navbar &amp; Footer for home.php (Complete)<br></p>
+</td></tr>
+<tr><td><img width="768px" src="https://user-images.githubusercontent.com/55101058/174495598-4009b5bb-d892-48af-ab12-1c450dcc55bd.png"/></td></tr>
+<tr><td> <em>Caption:</em> <p>jlz6 06/19/2022 Code Navbar index.php (Complete)<br></p>
+</td></tr>
+<tr><td><img width="768px" src="https://user-images.githubusercontent.com/55101058/174495699-22074556-962c-4c5f-b273-0cdf6090b2a3.png"/></td></tr>
+<tr><td> <em>Caption:</em> <p>jlz6 06/19/2022 Code for Footer index.php (Complete)<br></p>
+</td></tr>
+</table></td></tr>
+</table></td></tr>
+<table><tr><td> <em>Deliverable 2: </em> Discuss </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="http://via.placeholder.com/400x120/009955/fff?text=Complete"></td></tr>
+<tr><td><table><tr><td> <em>Sub-Task 1: </em> Briefly talk about what you contributed to the above issues/tracking items</td></tr>
+<tr><td> <em>Response:</em> <p>My task for this week is to create a functionally navbar for my<br>group sites. Navbar is design&nbsp; to cooperate depending on the appreciate function. For<br>instance sign-out function only appear on webpage that grant user access to app<br>feature(pages after user successfully login).<div>Each webpage can be access through navbar beside some<br>features in home.php because we have not create webpages(Create Room, Join Room, User<br>Profile, Leaderboard, and Dashboard) for them yet. In addition, I add footer to<br>all page and is currently working with my group on the CSS, and<br>RabbitMQ issue(error 500).&nbsp;</div><br></p><br></td></tr>
+<tr><td> <em>Sub-Task 2: </em> Any problems this week with your tasks or any group members? If so, how did you resolve them or how do you plan to resolve them.</td></tr>
+<tr><td> <em>Response:</em> <p>Currently our group is trying to figure out how to send data from<br>our webpage through RabbitMQ. We keep getting code error 500. Our group is<br>looking up for RabbitMQ documents and tutorials. Our issue as of this moment<br>is&nbsp;in the process of resolution. (06/10/2022-2:35pm)<div>Other than that our group is active and<br>on pace.</div><br></p><br></td></tr>
+</table></td></tr>
+<table><tr><td><em>Grading Link: </em><a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IT490-450-M22/m4-contributions/grade/jlz6" target="_blank">Grading</a></td></tr></table>
