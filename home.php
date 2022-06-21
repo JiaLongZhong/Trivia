@@ -44,6 +44,11 @@
 
     <?php
 require_once(__DIR__ . "/lib/helpers.php");
+if (!is_logged_in()){
+	
+	header('Location:home2.php');
+}
+
 echo '<p>Welcome ' . get_user_fullname() . '</p>';
 ?>
 <form action="logout.php">
