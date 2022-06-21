@@ -186,6 +186,7 @@ if (isset($_POST["submit"])) {
         $e = $stmt->errorInfo();
         if ($e[0] == "00000") {
             echo "Registration successful";
+            header("Location:login.php");
         }
         else {
             echo "something went wrong";
