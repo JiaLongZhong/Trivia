@@ -20,7 +20,7 @@ You&#39;ll want to change the file name to include your ucid so it doesn&#39;t c
 </table></td></tr>
 <table><tr><td> <em>Deliverable 2: </em> Discuss </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="http://via.placeholder.com/400x120/009955/fff?text=Complete"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Briefly talk about what you contributed to the above issues/tracking items</td></tr>
-<tr><td> <em>Response:</em> <div>Emily Hontiveros:</div><div>1. Helped research how to connect the login page directly to RabbitMQ.<br>**Still in progress</div><div>https://github.com/MattToegel/IT490-M22-TBD1/issues/19</div><div><br></div><div>2. Did research for CSS choices that will continue to be<br>implemented into the home, login, and registration pages.</div><div>https://github.com/MattToegel/IT490-M22-TBD1/issues/24</div><br></td></tr>
+<tr><td> <em>Response:</em> <div>Emily Hontiveros:</div><div>1. Did research for CSS choices that will continue to be<br>implemented into the home, login, and registration pages. </div><div>https://github.com/MattToegel/IT490-M22-TBD1/issues/19</div><div><br></div><div>2. Helped research how to connect the login page directly to RabbitMQ.<br>**Still in progress  </div><div>https://github.com/MattToegel/IT490-M22-TBD1/issues/24</div><br></td></tr>
 <tr><td> <em>Sub-Task 2: </em> Any problems this week with your tasks or any group members? If so, how did you resolve them or how do you plan to resolve them.</td></tr>
 <tr><td> <em>Response:</em> <p>No issues<br></p><br></td></tr>
 </table></td></tr>
