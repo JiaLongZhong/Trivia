@@ -27,6 +27,7 @@
             <input type="submit" id="l_submit" name="submit" value="Log In" />
         </form>
         <h4>Don't have an account? <a href="register.php">Register Here</a></h4>
+
         <?php include_once(__DIR__ . "/partials/footer.php"); ?>
 
         <?php
@@ -34,6 +35,7 @@
             $user_email = null;
             $pass = null;
             $_POST["type"] = $_POST["submit"];
+
 
             if (isset($_POST["user_email"])) {
                 $user_email = $_POST["user_email"];
@@ -67,3 +69,4 @@
             }
         }
         ?>
+

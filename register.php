@@ -10,7 +10,9 @@
 </head>
 
 <body>
+
     <?php require_once(__DIR__ . "/partials/nav.php"); ?>
+
 
     <div class="container">
 
@@ -61,6 +63,7 @@
             </form>
         </div>
     </div>
+
 
     <?php include_once(__DIR__ . "/partials/footer.php"); ?>
 
@@ -119,6 +122,7 @@
         if (strlen($username) < 8 || strlen(($username) > 32)) {
             echo "Username must be between 8 and 32 characters";
             $isValid = false;
+
         }
 
         if (strlen($password) < 8) {
@@ -126,15 +130,18 @@
             $isValid = false;
         }
 
+
         if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d,.;:]).+$/', $password)) {
             echo "Password must contain a capital letter, a number, and a special character";
             $isValid = false;
         }
 
+
         if ($password != $password1) {
             echo "Passwords don't match";
             $isValid = false;
         }
+
 
         if (!isset($email) || !isset($username) || !isset($fname) || !isset($bday) || !isset($password) || !isset($password)) {
             echo "Unexpected error";

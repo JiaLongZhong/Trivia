@@ -30,7 +30,9 @@ function userLogin($n)
 		$response = false;
 	} else {
 		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
 		if ($result && isset($result["password"]) && $result["is_active"] == 1) {
+
 			$password_hash = $result["password"];
 			if (password_verify($n["pass"], $password_hash)) {
 				unset($result["password"]);
@@ -41,6 +43,7 @@ function userLogin($n)
 					"email" => $result["email"],
 					"id" => $result["id"],
 					"bday" => $result["bday"]
+
 				);
 				/* set_sess_var("fname", $result["fname"]);
 				set_sess_var("lname", $result["lname"]);
