@@ -11,10 +11,10 @@ You&#39;ll want to change the file name to include your ucid so it doesn&#39;t c
 <table><tr><td> <em>Deliverable 1: </em> Add screenshots of individual Issues (github recorded topics) that you worked on this week </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="http://via.placeholder.com/400x120/009955/fff?text=Complete"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Add a screenshot of each issue you worked on, include the link, and the status of the issue per the checklist</td></tr>
 <tr><td><table><tr><td><img width="768px" src="https://user-images.githubusercontent.com/72458226/174925959-84b9da63-b7bf-4258-8e4e-ec35b642547c.png"/></td></tr>
-<tr><td> <em>Caption:</em> <p>Create Webpage &amp; Footer #24 (Ongoing)<br></p>
+<tr><td> <em>Caption:</em> <p>Create Webpage &amp; Footer  (Ongoing)<br></p>
 </td></tr>
 <tr><td><img width="768px" src="https://user-images.githubusercontent.com/72458226/174926211-7a76d94b-ac0b-468a-ac45-9dd4a72ec882.png"/></td></tr>
-<tr><td> <em>Caption:</em> <p>User is able to login to their accounts directly #19 (In-progress)<br></p>
+<tr><td> <em>Caption:</em> <p>User is able to login to their accounts directly (In-progress)<br></p>
 </td></tr>
 </table></td></tr>
 </table></td></tr>
