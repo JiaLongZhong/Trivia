@@ -160,11 +160,11 @@
             $isValid = false;
         }
 
+
         if ($password != $password1) {
             echo "Passwords don't match";
             $isValid = false;
-        }
-
+          
         if (!isset($email) || !isset($username) || !isset($fname) || !isset($bday) || !isset($password) || !isset($password)) {
             echo "Unexpected error";
             $isValid = false;
