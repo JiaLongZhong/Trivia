@@ -10,11 +10,16 @@
 </head>
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
 
-<h1>My Profile</h1>
-<h3>Name: <?php echo get_user_fullname(); ?></h3>
-<h4>Email: <?php echo get_email(); ?></h4>
-<h4>Username: <?php echo get_username(); ?></h4>
-<h5>Age: <?php echo get_age(); ?></h5>
+<div class="card">
+    <img src="#" alt="User Profile" style="width:100%">
+    <div class="flex-grow-1 ms-3">
+        <h4 class="mb-1">Name:<?php echo get_user_fullname(); ?></h4>
+        <h4 class="mb-1">Email:<?php echo get_email(); ?></h4>
+        <h4 class="mb-1">Username:<?php echo get_username(); ?></h4>
+        <h4 class="mb-1">Age:<?php echo get_age(); ?></h4>
+
+    </div>
+</div>
 
 <?php include_once(__DIR__ . "/partials/footer.php"); ?>
 
