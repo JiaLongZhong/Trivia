@@ -1,0 +1,15 @@
+[Unit] 
+Description=Place file in /etc/systemd/system	Service to reboot the consumers on the API so the queue doesnt get connections stuck in queue
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=$user
+ExecStart=/usr/bin/env php /home/$user/IT490-Sample/API_consumer.php
+
+
+[Install]
+WantedBy=multi-user.target
