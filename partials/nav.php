@@ -1,6 +1,5 @@
 <?php require_once(__DIR__ . "/../lib/helpers.php"); ?>
 
-<nav class="navbar navbar-expand-lg bg-primary">
   <nav class="navbar navbar-expand-lg navbar-light bg-primary">
     <a class="navbar-brand">
         <img src="Logo.png" alt="Logo" height="36">&nbsp Trivia
