@@ -34,15 +34,12 @@ input[type=submit] {
 }
 
 /* Style the navbar */
-.navbar-nav{
-    position: absolute;
-    right: 0;
-}
-.nav-link{
+nav .navbar-nav li a{
+    color: white !important;
     font-family: "Bodoni MT";
-    color: white;
     font-size: 20px;
 }
+
 .navbar-brand{
     font-family: "Playfair";
     color: black;
