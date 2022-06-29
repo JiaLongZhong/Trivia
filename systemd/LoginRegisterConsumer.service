@@ -1,7 +1,8 @@
 [Unit] 
 Description=Service to reboot the registation and login consumers on the DB
 After=network.target
-StartLimitIntervalSec=0
+StartLimitBurst=3
+StartLimitIntervalSec=10
 
 [Service]
 Type=simple
