@@ -8,8 +8,8 @@ Type=simple
 Restart=always
 RestartSec=1
 User=saj39
-ExecStart=/usr/bin/env php /home/saj39/IT490-Sample/rpc_register_consumer.php
-ExecStartPost=/usr/bin/env php /home/saj39/IT490-Sample/rpc_login_consumer.php
+ExecStart=/usr/bin/env php /home/saj39/IT490-M22-TBD1/rpc_register_consumer.php
+ExecStartPost=/usr/bin/env php /home/saj39/IT490-M22-TBD1/rpc_login_consumer.php
 
 [Install]
 WantedBy=multi-user.target
