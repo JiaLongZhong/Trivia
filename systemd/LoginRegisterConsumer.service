@@ -1,5 +1,5 @@
 [Unit] 
-Description=Place file in /etc/systemd/system	Service to reboot the consumers on the DB so the queue doesnt get connections stuck in queue
+Description=Service to reboot the registation and login consumers on the DB
 After=network.target
 StartLimitIntervalSec=0
 
