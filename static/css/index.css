@@ -12,6 +12,8 @@ div.card-body{
     background-size: cover;
     height: 100vh;
     opacity: inherit;
+    display: grid;
+    place-items: center;
 }
 /* Style the navbar */
 nav .navbar-nav li a{
