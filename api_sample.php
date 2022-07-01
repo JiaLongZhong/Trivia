@@ -43,7 +43,27 @@ if ($err) {
 		echo "<pre>" . var_export($r,true)  . "</pre>";
 	}
 	else{
-		echo $r;
+		$response_array = json_decode($response, true);
+	$questions = $response_array["results"];
+	if(isset($questions) && "response_code"==0){
+		$mq_connection = new AMQPConnection($brokerhost, $brokerport, $brokeruser, $brokerpass, $vhost);
+		$mq_channel = $mq_connection->channel();
+		$mq_channel->queue_declare('testQueue', false, false, false, false);
+		$mq_channel->exchange_declare('testExchange', 'direct', false, false, false);
+		$mq_channel->queue_bind('testQueue', 'testExchange');
+		foreach($questions as $question){
+			$question_array = array(
+				"question" => $question["question"],
+				"correct_answer" => $question["correct_answer"],
+				"incorrect_answers" => $question["incorrect_answers"],
+				"category" => $question["category"],
+				"difficulty" => $question["difficulty"]
+			);
+			$mq_channel->basic_publish(new AMQPMessage(json_encode($question_array)), 'testExchange');
+		}
+		$mq_channel->close();
+		$mq_connection->close();
+	}
 	}
 }
 ?>
