@@ -9,14 +9,12 @@ if (!is_logged_in()) {
 
 <head>
     <title><?php echo ucfirst(substr(basename(__FILE__), 0, -4)); ?></title>
-    <?php require_once(__DIR__ . "/partials/header.php"); ?>
+    <?php require_once(__DIR__ . "/partials/homeheader.php"); ?>
 </head>
-
 <body>
     <?php require_once(__DIR__ . "/partials/nav.php"); ?>
 
-
-   <div class="container">
+    <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -35,14 +33,15 @@ if (!is_logged_in()) {
                             </div>
                         </div>
                     </div>
+                    <form action="logout.php">
+                        <input type="submit" value="Log Out" />
+                    </form>
                 </div>
             </div>
-</div>
-    <form action="logout.php">
-        <input type="submit" value="Log Out" />
-    </form>
+        </div>
+    </div>
 
-    <?php include_once(__DIR__ . "/partials/footer.php"); ?>
+        <?php include_once(__DIR__ . "/partials/footer.php"); ?>
     </body>
 
 </html>
