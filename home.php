@@ -16,7 +16,7 @@ if (!is_logged_in()) {
     <?php require_once(__DIR__ . "/partials/nav.php"); ?>
 
 
-   <div class="container1">
+   <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="card">
