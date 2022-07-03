@@ -12,8 +12,11 @@ div.card-body{
     background-size: cover;
     height: 100vh;
     opacity: inherit;
-    display: grid;
-    place-items: center;
+    height: 100vh;
+    opacity: inherit;
+    background-position: center;
+    background-size: cover;
+    position: relative;    
 }
 /* Style the navbar */
 nav .navbar-nav li a{
