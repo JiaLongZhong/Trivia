@@ -37,3 +37,8 @@ body{
     padding: 10px;
     position: relative;
 }
+
+input[type=submit] {
+    background-color: #04AA6D;
+    color: white;
+}
