@@ -40,15 +40,15 @@ if (!is_logged_in()) {
     </div>
 </div>
 <?php
-if (isset($_POST["question"])) {
-    $question = $_POST["question"];
-    $answer1 = $_POST["answer1"];
-    $answer2 = $_POST["answer2"];
-    $answer3 = $_POST["answer3"];
-    $answer4 = $_POST["answer4"];
-    $category = $_POST["category"];
-    $difficulty = $_POST["difficulty"];
-    $trivia_id = $_POST["trivia_id"];
+if (isset($_GET["q"])) {
+    $question = $_GET["q"];
+    $answer1 = $_GET["ia1"];
+    $answer2 = $_GET["ia2"];
+    $answer3 = $_GET["ia3"];
+    $answer4 = $_GET["ia4"];
+    $category = $_GET["c"];
+    $difficulty = $_GET["d"];
+    $trivia_id = $_GET["trivia_id"];
     $question_array = array(
         "question" => $question,
         "answer1" => $answer1,
