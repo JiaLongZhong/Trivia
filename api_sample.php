@@ -1,5 +1,5 @@
 <?php
-require("config.inc");
+
 $source = "dogecoin";
 if(isset($argv[1])){
 	//$argv[0] is name of script always
@@ -75,7 +75,7 @@ if ($err) {
 					"difficulty" => $question["difficulty"]
 				);
 			}
-			$response = json_decode($reg_rpc->call($question_array, "testQueue"),true);
+			$response = json_decode($reg_rpc->call($question_array, "TriviaAPIQueue"),true);
 			if ($response["status"] == "success") {
                 echo "Questions written Successful";
                 //header("Location: login.php");
