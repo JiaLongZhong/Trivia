@@ -40,7 +40,7 @@ if (!is_logged_in()) {
     </div>
 </div>
 <?php
-if ($isValid&&isset($_POST["question"])) {
+if (isset($_POST["question"])) {
     $question = $_POST["question"];
     $answer1 = $_POST["answer1"];
     $answer2 = $_POST["answer2"];
