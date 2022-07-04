@@ -1,6 +1,6 @@
 <?php
 require("config.inc");
-$source = "bitcoin";
+$source = "dogecoin";
 if(isset($argv[1])){
 	//$argv[0] is name of script always
 	$source = $argv[1];
@@ -11,7 +11,7 @@ if(isset($_GET["query"])){
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-	CURLOPT_URL => "https://newsapi.org/v2/everything?q=$source&apiKey=$api_key",
+	CURLOPT_URL => "https://opentdb.com/api.php?amount=10",
 	CURLOPT_RETURNTRANSFER => true,
 	CURLOPT_FOLLOWLOCATION => true,
 	CURLOPT_ENCODING => "",
