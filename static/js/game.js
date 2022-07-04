@@ -1,7 +1,7 @@
 window.onload = sendApiRequest
 
 async function sendApiRequest(){
-    let response = await fetch('https://opentdb.com/api.php?amount=10');
+    let response = await fetch('https://opentdb.com/api.php?amount=10&type=multiple');
     console.log(response)
     let data = await response.json()
     console.log(data)
@@ -17,6 +17,20 @@ function useApiData(data){
     document.querySelector("#answer2").innerHTML = data.results[0].incorrect_answers[0]
     document.querySelector("#answer3").innerHTML = data.results[0].incorrect_answers[1]
     document.querySelector("#answer4").innerHTML = data.results[0].incorrect_answers[2]
+    $.ajax({
+        type: "POST",
+        url: "game.php",
+        data: {
+            category: data.results[0].category,
+            difficulty: data.results[0].difficulty,
+            question: data.results[0].question,
+            answer1: data.results[0].correct_answer,
+            answer2: data.results[0].incorrect_answers[0],
+            answer3: data.results[0].incorrect_answers[1],
+            answer4: data.results[0].incorrect_answers[2],
+            trivia_id: data.results[0].id
+        }
+    });
 }
 
 let correctButton = document.querySelector("#answer1")
