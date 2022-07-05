@@ -40,7 +40,7 @@ if (!is_logged_in()) {
     </div>
 </div>
 <script>
-    document.getElementById('answer1').innerHTML = $_POST["ia1"];
+    document.getElementById('answer1').innerHTML = <?php echo json_encode($_POST['answer1']); ?>;
     document.getElementById('answer2').innerHTML = $_POST["ia2"];
     document.getElementById('answer3').innerHTML = $_POST["ia3"];
     document.getElementById('answer4').innerHTML = $_POST["ia4"];
