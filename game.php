@@ -49,7 +49,7 @@ if (!is_logged_in()) {
     document.getElementById('difficulty').innerHTML = <?php echo json_encode($_GET['d']); ?>;
     </script>
 <?php
-sleep(10);
+
 if (isset($_GET["c"])) {
     $question = $_GET["q"];
     $answer1 = $_GET["ia1"];
@@ -60,16 +60,7 @@ if (isset($_GET["c"])) {
     $difficulty = $_GET["d"];
     $userID = get_user_id();
     $trivia_id = 1;
-    //set html button texts to be answers set in php
-    echo "<script>
-    document.getElementById('answer1').innerHTML = '$answer1';
-    document.getElementById('answer2').innerHTML = '$answer2';
-    document.getElementById('answer3').innerHTML = '$answer3';
-    document.getElementById('answer4').innerHTML = '$answer4';
-    document.getElementById('question').innerHTML = '$question';
-    document.getElementById('category').innerHTML = '$category';
-    document.getElementById('difficulty').innerHTML = '$difficulty';
-    </script>";
+    
 
     $question_array = array(
         "question" => $question,
