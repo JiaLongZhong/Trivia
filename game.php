@@ -40,24 +40,24 @@ if (!is_logged_in()) {
     </div>
 </div>
 <script>
-    document.getElementById('answer1').innerHTML = <?php echo json_encode($_POST['answer1']); ?>;
-    document.getElementById('answer2').innerHTML = $_POST["ia2"];
-    document.getElementById('answer3').innerHTML = $_POST["ia3"];
-    document.getElementById('answer4').innerHTML = $_POST["ia4"];
-    document.getElementById('question').innerHTML = $_POST["q"];
-    document.getElementById('category').innerHTML = $_POST["c"];
-    document.getElementById('difficulty').innerHTML = $_POST["d"];
+    document.getElementById('answer1').innerHTML = <?php echo json_encode($_GET['ia1']); ?>;
+    document.getElementById('answer2').innerHTML = <?php echo json_encode($_GET['ia2']); ?>;
+    document.getElementById('answer3').innerHTML = <?php echo json_encode($_GET['ia3']); ?>;
+    document.getElementById('answer4').innerHTML = <?php echo json_encode($_GET['ia4']); ?>;
+    document.getElementById('question').innerHTML = <?php echo json_encode($_GET['q']); ?>;
+    document.getElementById('category').innerHTML = <?php echo json_encode($_GET['c']); ?>;
+    document.getElementById('difficulty').innerHTML = <?php echo json_encode($_GET['d']); ?>;
     </script>
 <?php
 sleep(10);
-if (isset($_POST["c"])) {
-    $question = $_POST["q"];
-    $answer1 = $_POST["ia1"];
-    $answer2 = $_POST["ia2"];
-    $answer3 = $_POST["ia3"];
-    $answer4 = $_POST["ia4"];
-    $category = $_POST["c"];
-    $difficulty = $_POST["d"];
+if (isset($_GET["c"])) {
+    $question = $_GET["q"];
+    $answer1 = $_GET["ia1"];
+    $answer2 = $_GET["ia2"];
+    $answer3 = $_GET["ia3"];
+    $answer4 = $_GET["ia4"];
+    $category = $_GET["c"];
+    $difficulty = $_GET["d"];
     $userID = get_user_id();
     $trivia_id = 1;
     //set html button texts to be answers set in php

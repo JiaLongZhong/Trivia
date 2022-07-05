@@ -1,4 +1,4 @@
-window.onload = sendApiRequest
+window.load = sendApiRequest
 
 async function sendApiRequest(){
     let response = await fetch('https://opentdb.com/api.php?amount=10&type=multiple');
