@@ -48,6 +48,7 @@ if (isset($_GET["q"])) {
     $answer4 = $_GET["ia4"];
     $category = $_GET["c"];
     $difficulty = $_GET["d"];
+    $userID = get_user_id();
     $trivia_id = $_GET["trivia_id"];
     $question_array = array(
         "question" => $question,
@@ -57,7 +58,7 @@ if (isset($_GET["q"])) {
         "answer4" => $answer4,
         "category" => $category,
         "difficulty" => $difficulty,
-        "user" => get_user_id(),
+        "user" => $userID,
         "trivia_id" => $_POST["trivia_id"]
     );
 
