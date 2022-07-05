@@ -15,7 +15,7 @@ if (!is_logged_in()) {
 <body>
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
 <div class="container">
-    <div id="home" class="flex-center flex-column">
+    <div id="game" class="flex-center flex-column" method="POST">
         <h1>Trivia Game</h1>
         <h3 id="category"></h3>
         <h3 id="difficulty"></h3>
@@ -40,16 +40,16 @@ if (!is_logged_in()) {
     </div>
 </div>
 <?php
-if (isset($_GET["q"])) {
-    $question = $_GET["q"];
-    $answer1 = $_GET["ia1"];
-    $answer2 = $_GET["ia2"];
-    $answer3 = $_GET["ia3"];
-    $answer4 = $_GET["ia4"];
-    $category = $_GET["c"];
-    $difficulty = $_GET["d"];
+if (isset($_POST["q"])) {
+    $question = $_POST["q"];
+    $answer1 = $_POST["ia1"];
+    $answer2 = $_POST["ia2"];
+    $answer3 = $_POST["ia3"];
+    $answer4 = $_POST["ia4"];
+    $category = $_POST["c"];
+    $difficulty = $_POST["d"];
     $userID = get_user_id();
-    $trivia_id = $_GET["trivia_id"];
+    $trivia_id = 1;
     $question_array = array(
         "question" => $question,
         "answer1" => $answer1,
@@ -59,7 +59,7 @@ if (isset($_GET["q"])) {
         "category" => $category,
         "difficulty" => $difficulty,
         "user" => $userID,
-        "trivia_id" => $_POST["trivia_id"]
+        "trivia_id" => $trivia_id
     );
 
 require_once(__DIR__ . "/rpc_producer.php");
