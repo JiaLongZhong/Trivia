@@ -39,8 +39,18 @@ if (!is_logged_in()) {
 
     </div>
 </div>
+<script>
+    document.getElementById('answer1').innerHTML = $_POST["ia1"];
+    document.getElementById('answer2').innerHTML = $_POST["ia2"];
+    document.getElementById('answer3').innerHTML = $_POST["ia3"];
+    document.getElementById('answer4').innerHTML = $_POST["ia4"];
+    document.getElementById('question').innerHTML = $_POST["q"];
+    document.getElementById('category').innerHTML = $_POST["c"];
+    document.getElementById('difficulty').innerHTML = $_POST["d"];
+    </script>
 <?php
-if (isset($_POST["q"])) {
+sleep(10);
+if (isset($_POST["c"])) {
     $question = $_POST["q"];
     $answer1 = $_POST["ia1"];
     $answer2 = $_POST["ia2"];
@@ -50,6 +60,17 @@ if (isset($_POST["q"])) {
     $difficulty = $_POST["d"];
     $userID = get_user_id();
     $trivia_id = 1;
+    //set html button texts to be answers set in php
+    echo "<script>
+    document.getElementById('answer1').innerHTML = '$answer1';
+    document.getElementById('answer2').innerHTML = '$answer2';
+    document.getElementById('answer3').innerHTML = '$answer3';
+    document.getElementById('answer4').innerHTML = '$answer4';
+    document.getElementById('question').innerHTML = '$question';
+    document.getElementById('category').innerHTML = '$category';
+    document.getElementById('difficulty').innerHTML = '$difficulty';
+    </script>";
+
     $question_array = array(
         "question" => $question,
         "answer1" => $answer1,
