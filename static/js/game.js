@@ -18,7 +18,7 @@ function sendQuestion(data) {
 	var incorrect_answers1 = data.results[0].incorrect_answers[0]
 	var incorrect_answers2 = data.results[0].incorrect_answers[1]
 	var incorrect_answers3 = data.results[0].incorrect_answers[2]
-	console.log(herehere)
+	console.log("herehere")
 	window,location,href = `game.php?c=${category}&t=${type}&d=${difficulty}&q=${question}&ca=${correct_answer}&ia1=${incorrect_answers1}&ia2=${incorrect_answers2}&ia3=${incorrect_answers3}`;
 }
 
