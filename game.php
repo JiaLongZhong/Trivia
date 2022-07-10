@@ -11,8 +11,9 @@ if (!is_logged_in()) {
         <title>Game Page</title>
         <?php require_once(__DIR__ . "/partials/gameheader.php"); ?>
     </head>
-    <body class = "flex">
+    <body>
         <?php require_once(__DIR__ . "/partials/nav.php"); ?>
+        <div class = "flex">
         <div class = "wrapper">
             <div class = "quiz-container">
                 <div class = "quiz-head">
@@ -40,6 +41,7 @@ if (!is_logged_in()) {
                     <button type = "button" id = "play-again">Play Again!</button>
                 </div>
             </div>
+        </div>
         </div>
         <?php include_once(__DIR__ . "/partials/footer.php"); ?>
         <script src="scripts\game.js"></script>
