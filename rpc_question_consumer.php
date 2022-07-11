@@ -12,7 +12,8 @@ $channel = $connection->channel();
 
 $channel->queue_declare('question_queue', false, false, false, false);
 
-function answerSubmit($m){
+function answerSubmit($m)
+{
 	$log_file_name = "question_consumer.log";
 	write_log("answerSubmit from: " . $m['user_id'], $log_file_name);
 	$params = array(
@@ -20,7 +21,7 @@ function answerSubmit($m){
 		":question_id" => $m["question_id"],
 		":user_id" => $m["user_id"],
 		":isCorrect" => $m["isCorrect"]
-		
+
 	);
 	//$type = $data[":type"];
 	$db = getDB();
@@ -38,7 +39,7 @@ function answerSubmit($m){
 	} elseif ($e[0] == "23000") {
 		$response = array(
 			"status" => "error",
-			"message" => "Email or username already exists"
+			"message" => "Question already exists"
 		);
 		write_log("answerSubmit error: " . $e[2], $log_file_name);
 	} else {
@@ -73,11 +74,10 @@ function QuestionSubmit($n)
 		);
 		write_log("question added success: " . $n["user"], $log_file_name);
 		//submit the answers to the answer table
-		answerSubmit(array( "user_id" => $n["user"], "question_id" => $n["question_id"], "answer" => $n["answer1"], "isCorrect" => 1));
-		answerSubmit(array( "user_id" => $n["user"], "question_id" => $n["question_id"], "answer" => $n["answer2"], "isCorrect" => 0));
-		answerSubmit(array( "user_id" => $n["user"], "question_id" => $n["question_id"], "answer" => $n["answer3"], "isCorrect" => 0));
-		answerSubmit(array( "user_id" => $n["user"], "question_id" => $n["question_id"], "answer" => $n["answer4"], "isCorrect" => 0));
-
+		answerSubmit(array("user_id" => $n["user"], "question_id" => $n["question_id"], "answer" => $n["answer1"], "isCorrect" => 1));
+		answerSubmit(array("user_id" => $n["user"], "question_id" => $n["question_id"], "answer" => $n["answer2"], "isCorrect" => 0));
+		answerSubmit(array("user_id" => $n["user"], "question_id" => $n["question_id"], "answer" => $n["answer3"], "isCorrect" => 0));
+		answerSubmit(array("user_id" => $n["user"], "question_id" => $n["question_id"], "answer" => $n["answer4"], "isCorrect" => 0));
 	} elseif ($e[0] == "23000") {
 		$response = array(
 			"status" => "error",
