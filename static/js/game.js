@@ -1,55 +1,126 @@
-window.load = sendApiRequest
 
-async function sendApiRequest(){
-    let response = await fetch('https://opentdb.com/api.php?amount=10&type=multiple');
-    console.log(response)
-    let data = await response.json()
-    console.log(data)
-    sendQuestion(data)
-    useApiData(data)
+const _question = document.getElementById('question');
+const _options = document.querySelector('.quiz-options');
+const _checkBtn = document.getElementById('check-answer');
+const _playAgainBtn = document.getElementById('play-again');
+const _result = document.getElementById('result');
+const _correctScore = document.getElementById('correct-score');
+const _totalQuestion = document.getElementById('total-question');
+
+let correctAnswer = "", correctScore = askedCount = 0, totalQuestion = 10;
+
+// load question from API
+async function loadQuestion(){
+    const APIUrl = 'https://opentdb.com/api.php?amount=1';
+    const result = await fetch(`${APIUrl}`)
+    const data = await result.json();
+    _result.innerHTML = "";
+    showQuestion(data.results[0]);
 }
 
-function sendQuestion(data) {
-	var category = data.results[0].category
-	var type = data.results[0].type
-	var difficulty= data.results[0].difficulty
-	var question = data.results[0].question
-	var correct_answer = data.results[0].correct_answer
-	var incorrect_answers1 = data.results[0].incorrect_answers[0]
-	var incorrect_answers2 = data.results[0].incorrect_answers[1]
-	var incorrect_answers3 = data.results[0].incorrect_answers[2]
-	console.log("herehere")
-	window.location.href = `game.php?c=${category}&t=${type}&d=${difficulty}&q=${question}&ia1=${correct_answer}&ia2=${incorrect_answers1}&ia3=${incorrect_answers2}&ia4=${incorrect_answers3}`;
+// event listeners
+function eventListeners(){
+    _checkBtn.addEventListener('click', checkAnswer);
+    _playAgainBtn.addEventListener('click', restartQuiz);
 }
 
-function useApiData(data){
+document.addEventListener('DOMContentLoaded', function(){
+    loadQuestion();
+    eventListeners();
+    _totalQuestion.textContent = totalQuestion;
+    _correctScore.textContent = correctScore;
+});
 
-    document.querySelector("#category").innerHTML = `Category: ${data.results[0].category}`
-    document.querySelector("#difficulty").innerHTML = `Difficulty: ${data.results[0].difficulty}`
-    document.querySelector("#question").innerHTML = `Question: ${data.results[0].question}`
-    document.querySelector("#answer1").innerHTML = data.results[0].correct_answer
-    document.querySelector("#answer2").innerHTML = data.results[0].incorrect_answers[0]
-    document.querySelector("#answer3").innerHTML = data.results[0].incorrect_answers[1]
-    document.querySelector("#answer4").innerHTML = data.results[0].incorrect_answers[2]
-    /*$.ajax({
-        type: "POST",
-        url: "game.php",
-        data: {
-            category: data.results[0].category,
-            difficulty: data.results[0].difficulty,
-            question: data.results[0].question,
-            answer1: data.results[0].correct_answer,
-            answer2: data.results[0].incorrect_answers[0],
-            answer3: data.results[0].incorrect_answers[1],
-            answer4: data.results[0].incorrect_answers[2],
-            trivia_id: data.results[0].id
+
+// display question and options
+function showQuestion(data){
+    _checkBtn.disabled = false;
+    correctAnswer = data.correct_answer;
+    let incorrectAnswer = data.incorrect_answers;
+    let optionsList = incorrectAnswer;
+    optionsList.splice(Math.floor(Math.random() * (incorrectAnswer.length + 1)), 0, correctAnswer);
+    // console.log(correctAnswer);
+
+    
+    _question.innerHTML = `${data.question} <br> <span class = "category"> ${data.category} <br> <span class = "difficulty">Difficulty: ${data.difficulty}</span>`;
+    _options.innerHTML = `
+        ${optionsList.map((option, index) => `
+            <li> ${index + 1}. <span>${option}</span> </li>
+        `).join('')}
+    `;
+    selectOption();
+
+}
+
+
+// options selection
+function selectOption(){
+    _options.querySelectorAll('li').forEach(function(option){
+        option.addEventListener('click', function(){
+            if(_options.querySelector('.selected')){
+                const activeOption = _options.querySelector('.selected');
+                activeOption.classList.remove('selected');
+            }
+            option.classList.add('selected');
+        });
+    });
+}
+
+// answer checking
+function checkAnswer(){
+    _checkBtn.disabled = true;
+    if(_options.querySelector('.selected')){
+        let selectedAnswer = _options.querySelector('.selected span').textContent;
+        if(selectedAnswer == HTMLDecode(correctAnswer)){
+            correctScore++;
+            _result.innerHTML = `<p><i class = "fas fa-check"></i>Correct Answer!</p>`;
+        } else {
+            _result.innerHTML = `<p><i class = "fas fa-times"></i>Incorrect Answer!</p> <small><b>Correct Answer: </b>${correctAnswer}</small>`;
         }
-    });*/
-    //$.post("game.php", {"question": data.results[0].question, "answer1": data.results[0].correct_answer, "answer2": data.results[0].incorrect_answers[0], "answer3": data.results[0].incorrect_answers[1], "answer4": data.results[0].incorrect_answers[2], "trivia_id": data.results[0].id});
+        checkCount();
+    } else {
+        _result.innerHTML = `<p><i class = "fas fa-question"></i>Please select an option!</p>`;
+        _checkBtn.disabled = false;
+    }
 }
 
-let correctButton = document.querySelector("#answer1")
-    correctButton.addEventListener("click",()=>{
-        alert("Correct!")
-        sendApiRequest()
-     })
+// to convert html entities into normal text of correct answer if there is any
+function HTMLDecode(textString) {
+    let doc = new DOMParser().parseFromString(textString, "text/html");
+    return doc.documentElement.textContent;
+}
+
+
+function checkCount(){
+    askedCount++;
+    setCount();
+    if(askedCount == totalQuestion){
+        setTimeout(function(){
+            console.log("");
+        }, 5000);
+
+
+        _result.innerHTML += `<p>Your score is ${correctScore}.</p>`;
+        _playAgainBtn.style.display = "block";
+        _checkBtn.style.display = "none";
+    } else {
+        setTimeout(function(){
+            loadQuestion();
+        }, 300);
+    }
+}
+
+function setCount(){
+    _totalQuestion.textContent = totalQuestion;
+    _correctScore.textContent = correctScore;
+}
+
+
+function restartQuiz(){
+    correctScore = askedCount = 0;
+    _playAgainBtn.style.display = "none";
+    _checkBtn.style.display = "block";
+    _checkBtn.disabled = false;
+    setCount();
+    loadQuestion();
+}

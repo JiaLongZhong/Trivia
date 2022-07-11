@@ -60,7 +60,7 @@ button{
 /* Style the card */
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    max-width: 300px;
+    max-width: 80%;
     margin: auto;
     text-align: center;
     font-family: arial;
@@ -69,4 +69,15 @@ button{
 .title {
     color: grey;
     font-size: 18px;
+}
+
+/* Centered Image Code */
+
+ .center {
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #dbe4ed; /* Border color is optional */  
+
 }
