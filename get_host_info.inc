@@ -13,3 +13,4 @@ function getHostInfo($server, array $extra = NULL){
 	}
 	return $machine;
 }
+?>
