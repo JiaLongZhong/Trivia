@@ -39,12 +39,19 @@ function userLogin($n)
 			$password_hash = $result["password"];
 			if (password_verify($n["pass"], $password_hash)) {
 				unset($result["password"]);
+				$user_id = $result["id"];
 				$query = "SELECT Userroles.user_id, Userroles.role_id, Roles.name FROM Userroles JOIN Roles ON Userroles.role_id = Roles.id WHERE Userroles.user_id = :user_id";
 				$stmt = $db->prepare($query);
-				$params = array(":user_id" => $result["id"]);
+				$params = array(":user_id" => $user_id);
 				$r = $stmt->execute($params);
 				$e = $stmt->errorInfo();
 				$result2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				$query = "SELECT * FROM Trivia WHERE user_id = :user_id";
+				$stmt = $db->prepare($query);
+				$params = array(":user_id" => $user_id);
+				$r = $stmt->execute($params);
+				$e = $stmt->errorInfo();
+				$result3 = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				$response = array(
 					"fname" => $result["fname"],
 					"lname" => $result["lname"],
@@ -53,6 +60,7 @@ function userLogin($n)
 					"id" => $result["id"],
 					"bday" => $result["bday"],
 					"roles" => $result2,
+					"trivia_games" => $result3,
 				);
 				write_log("userLogin success: " . $n["user_email"], $log_file_name);
 			} else {
