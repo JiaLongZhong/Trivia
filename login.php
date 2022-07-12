@@ -61,6 +61,7 @@
                     set_sess_var("email", $response["email"]);
                     set_sess_var("id", $response["id"]);
                     set_sess_var("bday", $response["bday"]);
+                    set_sess_var("roles", $response["roles"]);
                     header("Location:home.php");
                 }
             }

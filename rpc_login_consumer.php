@@ -39,13 +39,20 @@ function userLogin($n)
 			$password_hash = $result["password"];
 			if (password_verify($n["pass"], $password_hash)) {
 				unset($result["password"]);
+				$query = "SELECT Userroles.user_id, Userroles.role_id, Roles.name FROM Userroles JOIN Roles ON Userroles.role_id = Roles.id WHERE Userroles.user_id = :user_id";
+				$stmt = $db->prepare($query);
+				$params = array(":user_id" => $result["id"]);
+				$r = $stmt->execute($params);
+				$e = $stmt->errorInfo();
+				$result2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				$response = array(
 					"fname" => $result["fname"],
 					"lname" => $result["lname"],
 					"username" => $result["username"],
 					"email" => $result["email"],
 					"id" => $result["id"],
-					"bday" => $result["bday"]
+					"bday" => $result["bday"],
+					"roles" => $result2,
 				);
 				write_log("userLogin success: " . $n["user_email"], $log_file_name);
 			} else {

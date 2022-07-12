@@ -10,31 +10,31 @@
 
 <body>
     <div class="card">
-       <div class="center"> <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*" alt="User Profile" style="width:200px; height: 200px; border-radius:50%"></div>
+        <div class="center"> <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*" alt="User Profile" style="width:200px; height: 200px; border-radius:50%"></div>
         <div class="flex-grow-1 ms-3">
-        <div id="profile-form">
-            <h4 class="mb-1">Name:<?php echo get_user_fullname(); ?></h4>
-            <h4 class="mb-1">Email:<?php echo get_email(); ?></h4>
-            <h4 class="mb-1">Username:<?php echo get_username(); ?></h4>
-            <h4 class="mb-1">Age:<?php echo get_age(); ?></h4>
-            <input type="button" id="edit" name="edit" value="Update Profile" />
-        </div>
-        <form id="profile-confirm-form" method="post" style="display: none;">
-            <input type="number" id="userid" name="userid" value="<?php echo get_user_id(); ?>" hidden readonly />
-            <label for="new_username">Username: </label>
-            <input type="text" id="new_username" name="new_username" placeholder="New Username" />
-            <label for="current-password">Current Password</label>
-            <input type="password" id="current-password" name="current-password" placeholder="Current Password" />
-            <label for="new-password">New Password</label>
-            <input type="password" id="new-password" name="new-password" placeholder="New Password" />
-            <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" />
-            <input type="button" id="cancel" name="cancel" value="Cancel Update" />
-            <input type="submit" id="submit" name="submit" value="Confirm Update" />
-        </form>
+            <div id="profile-form">
+                <h4 class="mb-1">Name:<?php echo get_user_fullname(); ?></h4>
+                <h4 class="mb-1">Email:<?php echo get_email(); ?></h4>
+                <h4 class="mb-1">Username:<?php echo get_username(); ?></h4>
+                <h4 class="mb-1">Age:<?php echo get_age(); ?></h4>
+                <input type="button" id="edit" name="edit" value="Update Profile" />
+            </div>
+            <form id="profile-confirm-form" method="post" style="display: none;">
+                <input type="number" id="userid" name="userid" value="<?php echo get_user_id(); ?>" hidden readonly />
+                <label for="new_username">Username: </label>
+                <input type="text" id="new_username" name="new_username" placeholder="New Username" />
+                <label for="current-password">Current Password</label>
+                <input type="password" id="current-password" name="current-password" placeholder="Current Password" />
+                <label for="new-password">New Password</label>
+                <input type="password" id="new-password" name="new-password" placeholder="New Password" />
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" />
+                <input type="button" id="cancel" name="cancel" value="Cancel Update" />
+                <input type="submit" id="submit" name="submit" value="Confirm Update" />
+            </form>
         </div>
     </div>
-</body>    
+</body>
 <?php
 if (isset($_POST["submit"])) {
     $uid = null;
