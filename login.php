@@ -51,7 +51,6 @@
                 require_once(__DIR__ . "/rpc_producer.php");
                 $login_rpc = new RpcClient();
                 $response = json_decode($login_rpc->call($_POST, 'login_queue'), true);
-                echo var_dump($response);
                 if ($response["status"] == "error") {
                     echo "Login unsuccessful";
                 } else {
@@ -62,6 +61,7 @@
                     set_sess_var("id", $response["id"]);
                     set_sess_var("bday", $response["bday"]);
                     set_sess_var("roles", $response["roles"]);
+                    set_sess_var("trivia_games", $response["trivia_games"]);
                     header("Location:home.php");
                 }
             }

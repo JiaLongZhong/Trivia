@@ -55,11 +55,6 @@ function has_role($checkrole)
     }
 }
 
-
-
-
-
-
 function get_age()
 {
     $bday = get_birthday();
@@ -90,4 +85,21 @@ function write_log($log_msg, $log_file)
     $log = fopen($log_path, "a");
     fwrite($log, "[ " . $timestamp . " ] " . $log_msg . "\n");
     fclose($log);
+}
+
+function get_trivia_games()
+{
+    if (isset($_SESSION["trivia_games"])) {
+        return $_SESSION["trivia_games"];
+    }
+}
+
+function list_created_games()
+{
+    $trivia_games = get_trivia_games();
+    if (isset($trivia_games)) {
+        foreach ($trivia_games as $game) {
+            echo "<li>" . $game["title"] . "</li>";
+        }
+    }
 }
