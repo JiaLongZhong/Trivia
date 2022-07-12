@@ -42,6 +42,24 @@ function get_birthday()
     }
 }
 
+function has_role($checkrole)
+{
+    if (isset($_SESSION["roles"])) {
+        foreach ($_SESSION["roles"] as $role) {
+            foreach ($role as $key => $value) {
+                if ($key == "name" && $value == $checkrole) {
+                    return true;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
 function get_age()
 {
     $bday = get_birthday();
