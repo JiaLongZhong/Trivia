@@ -18,7 +18,7 @@ class RpcServer
 
 	public function __construct($queue_name)
 	{
-		require_once(__DIR__ . '/lib/configrmq.php');
+		require_once(__DIR__ . '/lib/configrmq.ini');
 		$this->connection = new AMQPStreamConnection(
 			$brokerhost,
 			$brokerport,
