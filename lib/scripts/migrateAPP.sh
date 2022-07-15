@@ -1,18 +1,19 @@
 
-host=34.125.165.210
-user=jlz6
-
-[ -z "$1" ] && { source=.; echo "source set to local dir"; } || source=$1
-if [ -z "$2" ]; then 
-	echo "Must pass a destination"
-	exit   
-fi 
-dest=$2 
-echo "Pushing data" 
-[ -x ./push.sh ] && sudo chmod +x ./push.sh || { echo "push.sh not found"; exit 1; }
-    ./push.sh $source $user $host $dest
-
-
-./push.sh /home/dwq2/Group/IT490-M22-TBD1/lib jlz6 34.125.165.210 /home/dropoff/lib
-
-/home/dwq2/Group/IT490-M22-TBD1/lib
+[ ! $# -eq 3 ] && { echo "Usage: username_on_vm IP_remote_vm IP_for_MQ_in branch"; exit 1; } 
+#34.138.248.175
+./migrate.sh /home/$USER/Scripts/lib/scripts/ /home/$1/scripts/ $1 $2
+#the paths need to be generalized
+ssh -i ~/.ssh/id_rsa $1@$2 /home/$1/scripts/base.sh start $3 $1
+./migrate.sh /home/$USER/Group/IT490-M22-TBD1/static /home/$1/dropoff/static $1 $2
+./migrate.sh /home/$USER/Group/IT490-M22-TBD1/partials /home/$1/dropoff/partials $1 $2
+./migrate.sh /home/$USER/Group/IT490-M22-TBD1/vender /home/$1/dropoff/vender $1 $2
+./migrate.sh /home/$USER/Group/IT490-M22-TBD1/lib/helpers.php /home/$1/dropoff/lib $1 $2
+./migrate.sh /home/$USER/Group/IT490-M22-TBD1/lib/index.php /home/$1/dropoff/lib $1 $2
+./migrate.sh /home/$USER/Group/IT490-M22-TBD1/README.md /home/$1/dropoff $1 $2
+#copies all php outside of the lib folder to the dropoff folder
+for file in /home/$USER/Group/IT490-M22-TBD1/*.php; do
+	./migrate.sh $file /home/$1/dropoff $1 $2
+done
+ssh -i ~/.ssh/id_rsa $1@$2 /home/$1/scripts/base.sh APP $3 $1
+#move changes to the live folder
+#ssh -i ~/.ssh/id_rsa $1@$2 /home/$1/scripts/do_Implement.sh dropoff
