@@ -15,8 +15,7 @@ case $1 in
 	"APP")
         sudo apt update
         sudo apt upgrade
-
-		sudo apt install php php-bcmath composer 
+        sudo apt install php-json php-curl composer php-mbstring php-zip php-gd php php-bcmath
 		[ sudo systemctl status apache2 | grep "Status: install" ] && sudo apt install apache2
         
         echo "setup apache to serve the app"
@@ -50,8 +49,14 @@ case $1 in
     "DB")
         sudo apt upgrade
         sudo apt update
-        [ (sudo systemctl status mysql-server | grep "Status: install") ] && sudo apt install mysql-server
-        sudo mysql_secure_installation
+        sudo apt install php-json php-curl composer phpmyadmin php-mbstring php-zip php-gd php php-bcmath
+        sudo mysql_secure_installation 
+        # in the work \/
+        user="DB";
+        pass="DB";
+        sudo mysql -u $user -p$pass -e "CREATE DATABASE IF NOT EXISTS `$user`; GRANT ALL PRIVILEGES ON `$user`.* TO '$user'@'localhost' IDENTIFIED BY '$pass'; FLUSH PRIVILEGES;";
+        
+        [ (sudo systemctl status mysql-server | grep "Status: install") ] && sudo apt install mariadb-server
         #setup rsyslog to log to the MQ vm
         [ -e /etc/rsyslog.conf ] && { sudo chmod 666 /etc/rsyslog.conf; sudo echo "*.* @$2:514" >> /etc/rsyslog.conf; } || { echo "rsyslog not found"; sudo apt install rsyslog; }
         #setup to update or make the mq config file
@@ -63,7 +68,7 @@ case $1 in
     "API")
         sudo apt upgrade
         sudo apt update
-
+        sudo apt install php-json php-curl composer phpmyadmin php-mbstring php-zip php-gd
         echo "pulls API files and runs ~init-api.php"
         #check and install rsyslog with the correct config
         [ sudo systemctl status rsyslog | grep "Status: install" ] && { sudo apt install rsyslog; sudo chmod 666 /etc/rsyslog.conf; sudo echo "*.* @$2:514" >> /etc/rsyslog.conf; }
