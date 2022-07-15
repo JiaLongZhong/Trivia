@@ -6,11 +6,10 @@
 
 
 
-[ ! -d "/home/$USER/dropoff" ] &&  sudo mkdir dropoff
+[ ! -d "/home/$USER/dropoff" ] &&  sudo mkdir  dropoff
 [ ! -d "/home/$USER/backup" ] && sudo mkdir backup
 [ ! -d "/home/$USER/live" ] && sudo mkdir live
 [ ! -d "/home/$USER/scripts" ] && { sudo mkdir scripts; echo "the other scripts are missing"; exit 1; }
-
 
 case $1 in
 	"APP")
@@ -21,12 +20,12 @@ case $1 in
 		[ sudo systemctl status apache2 | grep "Status: install" ] && sudo apt install apache2
         
         echo "setup apache to serve the app"
-        #setup rsyslog to log to the MQ vm
-        [ sudo systemctl status rsyslog | grep "Status: install" ] && sudo apt install rsyslog
-        sudo echo "*.* @$2:514" >> /etc/rsyslog.conf
+        #setup rsyslog to log to the MQ vm 
+        #TODO fix the echo is not working
+        [ sudo systemctl status rsyslog | grep "Status: install" ] && { sudo apt install rsyslog; sudo chmod 666 /etc/rsyslog.conf; sudo echo "*.* @$2:514" >> /etc/rsyslog.conf; }
         sudo systemctl restart rsyslog
         #setup apache to serve the app from the live folder
-        [ -e /home/$USER/live/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; sudo mkdir /home/$USER/live/lib; }
+        [ -e /home/$USER/dropoff/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; sudo mkdir -p /home/$USER/dropoff/lib; }
         [ -e /home/$USER/dropoff/lib/configmq.ini ] && { echo "mqconfig exists"; } || { echo "configmq.ini not found, creating it now"; sudo touch /home/$USER/dropoff/lib/configmq.ini; sudo chmod 660 /home/$USER/dropoff/configmq.ini; echo "brokerhost = $2" >> /home/$USER/dropoff/lib/configmq.ini; echo "brokerport = 5672" >> /home/$USER/dropoff/lib/configmq.ini; echo "brokeruser = APP" >> /home/$USER/dropoff/lib/configmq.ini; echo "brokerpass = APP" >> /home/$USER/dropoff/lib/configmq.ini; cp -f /home/$USER/dropoff/lib/configmq.ini /home/$USER/scripts/configmq.ini.bak; }
         #[ -e /home/$USER/live/lib/configmq.ini ] && { echo "configmq.ini not found, creating it now"; touch /home/$USER/live/lib/configmq.ini; echo "brokerhost = $2" >> /home/$USER/live/lib/configmq.ini; echo "brokerport = 5672" >> /home/$USER/live/lib/configmq.ini; echo "brokeruser = APP" >> /home/$USER/live/lib/configmq.ini; echo "brokerpass = APP" >> /home/$USER/live/lib/configmq.ini;}
 		;;
@@ -38,26 +37,28 @@ case $1 in
         [ sudo systemctl status rsyslog | grep "Status: install" ] && sudo apt install rsyslog
         #"go to /etc/rsyslog.conf and uncomment the lines of provides UCP syslog reception then restart rsyslog"
         #setup rsyslog to recieve logs over udp
+        sudo chmod 666 /etc/rsyslog.conf
         sudo sed '17,18s/^#//'  /etc/rsyslog.conf
         sudo sed '14s/^#//'  /etc/rsyslog.conf
         sudo echo -e '$template remote-incoming-logs, "/var/log/remote/%HOSTNAME%/%PROGRAMNAME%.log"\n
 *.* ?remote-incoming-logs\n
 &~' >> /etc/rsyslog.conf
         sudo systemctl restart rsyslog
-        [ -e /home/$USER/live/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; sudo mkdir /home/$USER/live/lib; }
+        [ -e /home/$USER/live/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; sudo mkdir -p /home/$USER/live/lib; }
         [ -e /home/$USER/live/lib/configmq.ini ] && { echo "mqconfig exists"; } || { echo "configmq.ini not found, creating it now"; sudo touch /home/$USER/live/lib/configmq.ini; echo "brokerhost = $2" >> /home/$USER/live/lib/configmq.ini; echo "brokerport = 5672" >> /home/$USER/live/lib/configmq.ini; echo "brokeruser = dwq2" >> /home/$USER/live/lib/configmq.ini; echo "brokerpass = dwq2" >> /home/$USER/live/lib/configmq.ini; cp -f /home/$USER/live/lib/configmq.ini /home/$USER/scripts/configmq.ini.bak; }
 		;;
     "DB")
         sudo apt upgrade
         sudo apt update
-        [ sudo systemctl status mysql-server | grep "Status: install" ] && sudo apt install mysql-server
+        [ (sudo systemctl status mysql-server | grep "Status: install") ] && sudo apt install mysql-server
         sudo mysql_secure_installation
         #setup rsyslog to log to the MQ vm
-        [ sudo systemctl status rsyslog | grep "Status: install" ] && { sudo apt install rsyslog; sudo echo "*.* @$2:514" >> /etc/rsyslog.conf; sudo systemctl restart rsyslog; }
+        [ -e /etc/rsyslog.conf ] && { sudo chmod 666 /etc/rsyslog.conf; sudo echo "*.* @$2:514" >> /etc/rsyslog.conf; } || { echo "rsyslog not found"; sudo apt install rsyslog; }
         #setup to update or make the mq config file
-        [ -e /home/$USER/live/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; mkdir /home/$USER/live/lib; }
-        [ -e /home/$USER/live/lib/configmq.ini ] && { echo "mqconfig exists"; } || { echo "configmq.ini not found, creating it now"; touch /home/$USER/live/lib/configmq.ini; echo "brokerhost = $2" >> /home/$USER/live/lib/configmq.ini; echo "brokerport = 5672" >> /home/$USER/live/lib/configmq.ini; echo "brokeruser = DB" >> /home/$USER/live/lib/configmq.ini; echo "brokerpass = DB" >> /home/$USER/live/lib/configmq.ini; cp -f /home/$USER/live/lib/configmq.ini /home/$USER/scripts/configmq.ini.bak; }
-        echo "pull SQL tables and run init-db.php"
+        [ -e /home/$USER/dropoff/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; mkdir -p /home/$USER/dropoff/lib; }
+        [ -e /home/$USER/dropoff/lib/configmq.ini ] && { echo "mqconfig exists"; } || { echo "configmq.ini not found, creating it now"; touch /home/$USER/dropoff/lib/configmq.ini; echo "brokerhost = $2" >> /home/$USER/dropoff/lib/configmq.ini; echo "brokerport = 5672" >> /home/$USER/dropoff/lib/configmq.ini; echo "brokeruser = DB" >> /home/$USER/dropoff/lib/configmq.ini; echo "brokerpass = DB" >> /home/$USER/dropoff/lib/configmq.ini; cp -f /home/$USER/dropoff/lib/configmq.ini /home/$USER/scripts/configmq.ini.bak; }
+        [ -e /home/$USER/dropoff/lib/config.ini ] && { echo "config.ini exists"; } || { echo "config.ini not found, creating it now"; touch /home/$USER/dropoff/lib/config.ini; echo "dbhost = $2" >> /home/$USER/dropoff/lib/config.ini; echo "dbport = 3306" >> /home/$USER/dropoff/lib/config.ini; echo "dbuser = DB" >> /home/$USER/dropoff/lib/config.ini; echo "dbpass = DB" >> /home/$USER/dropoff/lib/config.ini; cp -f /home/$USER/dropoff/lib/config.ini /home/$USER/scripts/config.ini.bak; }
+        #echo "pull SQL tables and run init-db.php"
         ;;
     "API")
         sudo apt upgrade
@@ -65,12 +66,10 @@ case $1 in
 
         echo "pulls API files and runs ~init-api.php"
         #check and install rsyslog with the correct config
-        [ sudo systemctl status rsyslog | grep "Status: install" ] && sudo apt install rsyslog
-        sudo echo "*.* @$2:514" >> /etc/rsyslog.conf
-        sudo systemctl restart rsyslog
+        [ sudo systemctl status rsyslog | grep "Status: install" ] && { sudo apt install rsyslog; sudo chmod 666 /etc/rsyslog.conf; sudo echo "*.* @$2:514" >> /etc/rsyslog.conf; }
 
         #setup to update or make the mq config file
-        [ -e /home/$USER/live/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; mkdir /home/$USER/live/lib; }
+        [ -e /home/$USER/live/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; mkdir -p /home/$USER/live/lib; }
         [ -e /home/$USER/live/lib/configmq.ini ] && { echo "mqconfig exists"; } || { echo "configmq.ini not found, creating it now"; touch /home/$USER/live/lib/configmq.ini; echo "brokerhost = $2" >> /home/$USER/live/lib/configmq.ini; echo "brokerport = 5672" >> /home/$USER/live/lib/configmq.ini; echo "brokeruser = API" >> /home/$USER/live/lib/configmq.ini; echo "brokerpass = API" >> /home/$USER/live/lib/configmq.ini; cp -f /home/$USER/live/lib/configmq.ini /home/$USER/scripts/configmq.ini.bak; }
         ;;
     *)
