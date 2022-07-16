@@ -58,6 +58,7 @@ if (isset($_POST["submit"])) {
             echo "Trivia creation unsuccessful";
         } else {
             set_sess_var("trivia_games", $response["trivia_games"]);
+            header("Location: home.php");
         }
     }
 }
