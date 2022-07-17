@@ -25,7 +25,7 @@ case $1 in
         sudo systemctl restart rsyslog
         #setup apache to serve the app from the live folder
         [ -e /home/$USER/dropoff/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; sudo mkdir -p /home/$USER/dropoff/lib; }
-        [ -e /home/$USER/dropoff/lib/configmq.ini ] && { echo "mqconfig exists"; } || { echo "configmq.ini not found, creating it now"; sudo touch /home/$USER/dropoff/lib/configmq.ini; sudo chmod 660 /home/$USER/dropoff/configmq.ini; echo "brokerhost = $2" >> /home/$USER/dropoff/lib/configmq.ini; echo "brokerport = 5672" >> /home/$USER/dropoff/lib/configmq.ini; echo "brokeruser = APP" >> /home/$USER/dropoff/lib/configmq.ini; echo "brokerpass = APP" >> /home/$USER/dropoff/lib/configmq.ini; cp -f /home/$USER/dropoff/lib/configmq.ini /home/$USER/scripts/configmq.ini.bak; }
+        [ -e /home/$USER/dropoff/lib/configmq.ini ] && { echo "mqconfig exists"; } || { echo "configmq.ini not found, creating it now"; sudo touch /home/$USER/dropoff/lib/configmq.ini; sudo chmod 660 /home/$USER/dropoff/configmq.ini; ./home/$USER/scripts/secretConfigs.sh $2 "APP"; cp -f /home/$USER/dropoff/lib/configmq.ini /home/$USER/scripts/configmq.ini.bak; }
         #[ -e /home/$USER/live/lib/configmq.ini ] && { echo "configmq.ini not found, creating it now"; touch /home/$USER/live/lib/configmq.ini; echo "brokerhost = $2" >> /home/$USER/live/lib/configmq.ini; echo "brokerport = 5672" >> /home/$USER/live/lib/configmq.ini; echo "brokeruser = APP" >> /home/$USER/live/lib/configmq.ini; echo "brokerpass = APP" >> /home/$USER/live/lib/configmq.ini;}
 		;;
 	"MQ")
@@ -43,8 +43,8 @@ case $1 in
 *.* ?remote-incoming-logs\n
 &~' >> /etc/rsyslog.conf
         sudo systemctl restart rsyslog
-        [ -e /home/$USER/live/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; sudo mkdir -p /home/$USER/live/lib; }
-        [ -e /home/$USER/live/lib/configmq.ini ] && { echo "mqconfig exists"; } || { echo "configmq.ini not found, creating it now"; sudo touch /home/$USER/live/lib/configmq.ini; echo "brokerhost = $2" >> /home/$USER/live/lib/configmq.ini; echo "brokerport = 5672" >> /home/$USER/live/lib/configmq.ini; echo "brokeruser = dwq2" >> /home/$USER/live/lib/configmq.ini; echo "brokerpass = dwq2" >> /home/$USER/live/lib/configmq.ini; cp -f /home/$USER/live/lib/configmq.ini /home/$USER/scripts/configmq.ini.bak; }
+        [ -e /home/$USER/dropoff/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; sudo mkdir -p /home/$USER/dropoff/lib; }
+        [ -e /home/$USER/dropoff/lib/configmq.ini ] && { echo "mqconfig exists"; } || { echo "configmq.ini not found, creating it now"; sudo touch /home/$USER/dropoff/lib/configmq.ini; ./home/$USER/scripts/secretConfigs.sh $2 "MQ"; cp -f /home/$USER/dropoff/lib/configmq.ini /home/$USER/scripts/configmq.ini.bak; }
 		;;
     "DB")
         sudo apt upgrade
