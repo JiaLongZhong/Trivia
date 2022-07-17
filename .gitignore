@@ -4,3 +4,6 @@ config*
 host*
 test*
 logs/
+*.ini
+rabbitActMaker.sh
+allIPs.txt
