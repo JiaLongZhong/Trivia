@@ -16,6 +16,24 @@
     ?>
 
     <div>
+	<div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div id="intro" class="bg-image shadow-2-strong">
+                    <div class="mask" style="background-color: rgba(0, 0, 0, 0.8);">
+                        <div class="container d-flex align-items-center justify-content-center text-center h-100">
+                            <div class="text-white">
+                                <h1 class="mb-3">Create Trivia Questions </h1>
+                                <h5 class="mb-4"><p>To be the best, you will have to beat the best!
+                                      <br> Trivia creators can add questions and answers to the trivia games they created! </p>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
         <button id="create-trivia">Create Trivia</button>
         <form id="create-trivia-form" class="form" method="POST" style="display: none;">
             <label for="trivia-name">Name</label>
