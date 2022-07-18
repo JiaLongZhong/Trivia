@@ -50,7 +50,7 @@ case $1 in
     "DB")
         sudo apt upgrade
         sudo apt update
-        [ -e /home/$USER/live/lib] && { echo ""; } || { sudo apt install php-json php-curl composer phpmyadmin php-mbstring php-zip php-gd php php-bcmath; sudo mysql_secure_installation }
+        [ -e /home/$USER/live/lib] && { echo ""; } || { sudo apt install php-json php-curl composer php-mbstring php-zip php-gd php php-bcmath; sudo mysql_secure_installation }
         # in the work \/
         user="DB";
         pass="DB";
