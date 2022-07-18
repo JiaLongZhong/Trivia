@@ -45,27 +45,27 @@ case $1 in
         sudo systemctl restart rsyslog
         [ -e /home/$USER/dropoff/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; sudo mkdir -p /home/$USER/dropoff/lib; }
         [ -e /home/$USER/dropoff/lib/configmq.ini ] && { echo "mqconfig exists"; } || { echo "configmq.ini not found, creating it now"; sudo touch /home/$USER/dropoff/lib/configmq.ini; ./home/$USER/scripts/secretConfigs.sh $2 "MQ"; cp -f /home/$USER/dropoff/lib/configmq.ini /home/$USER/scripts/configmq.ini.bak; }
+        [ -x /home/$USER/scripts/rabbitActMaker.sh ] && { ./home/$USER/scripts/rabbitActMaker.sh; } || { sudo chmod +x home/$USER/scripts/rabbitActMaker.sh; ./home/$USER/scripts/rabbitActMaker.sh; }
 		;;
     "DB")
         sudo apt upgrade
         sudo apt update
-        sudo apt install php-json php-curl composer phpmyadmin php-mbstring php-zip php-gd php php-bcmath
-        sudo mysql_secure_installation 
+        [ -e /home/$USER/live/lib] && { echo ""; } || { sudo apt install php-json php-curl composer phpmyadmin php-mbstring php-zip php-gd php php-bcmath; sudo mysql_secure_installation }
         # in the work \/
         user="DB";
         pass="DB";
         sudo mysql -u $user -p$pass -e "CREATE DATABASE IF NOT EXISTS `$user`; GRANT ALL PRIVILEGES ON `$user`.* TO '$user'@'localhost' IDENTIFIED BY '$pass'; FLUSH PRIVILEGES;";
         
-        [ (sudo systemctl status mariadb-server | grep "Status: install") ] && sudo apt install mariadb-server
+        [ sudo systemctl status mariadb-server | grep "Status: install" ] && sudo apt install mariadb-server
         #setup rsyslog to log to the MQ vm
         [ -e /etc/rsyslog.conf ] && { sudo chmod 666 /etc/rsyslog.conf; sudo echo "*.* @$2:514" >> /etc/rsyslog.conf; } || { echo "rsyslog not found"; sudo apt install rsyslog; }
         #setup to update or make the mq config file
         [ -e /home/$USER/dropoff/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; mkdir -p /home/$USER/dropoff/lib; }
         [ -e /home/$USER/dropoff/lib/configmq.ini ] && { echo "mqconfig exists"; } || { echo "configmq.ini not found, creating it now"; touch /home/$USER/dropoff/lib/configmq.ini; ./home/$USER/scripts/secretConfigs.sh $2 "DB"; cp -f /home/$USER/dropoff/lib/configmq.ini /home/$USER/scripts/configmq.ini.bak; }
-        [ -e /home/$USER/dropoff/lib/config.ini ] && { echo "config.ini exists"; } || { echo "config.ini not found, creating it now"; touch /home/$USER/dropoff/lib/config.ini; echo "dbhost = $2" >> /home/$USER/dropoff/lib/config.ini; echo "dbport = 3306" >> /home/$USER/dropoff/lib/config.ini; echo "dbuser = DB" >> /home/$USER/dropoff/lib/config.ini; echo "dbpass = DB" >> /home/$USER/dropoff/lib/config.ini; cp -f /home/$USER/dropoff/lib/config.ini /home/$USER/scripts/config.ini.bak; }
+        [ -e /home/$USER/dropoff/lib/config.ini ] && { echo "config.ini exists"; } || { echo "config.ini not found, creating it now"; touch /home/$USER/dropoff/lib/config.ini; echo "dbhost = localhost" >> /home/$USER/dropoff/lib/config.ini; echo "dbport = 3306" >> /home/$USER/dropoff/lib/config.ini; echo "dbuser = DB" >> /home/$USER/dropoff/lib/config.ini; echo "dbpass = DB" >> /home/$USER/dropoff/lib/config.ini; cp -f /home/$USER/dropoff/lib/config.ini /home/$USER/scripts/config.ini.bak; }
         #echo "pull SQL tables and run init-db.php"
         #make the custom services running on boot
-        sudo cp -r /home/$USER/dropoff/services /etc/systemd/system/
+        sudo cp -r /home/$USER/live/services /etc/systemd/system/
         sudo systemctl start registeruser.service
         sudo systemctl enable registeruser.service
         sudo systemctl start loginuser.service
@@ -74,7 +74,6 @@ case $1 in
         sudo systemctl enable updateuser.service
         sudo systemctl start createtrivia.service
         sudo systemctl enable createtrivia.service
-        
         ;;
     "API")
         sudo apt upgrade
