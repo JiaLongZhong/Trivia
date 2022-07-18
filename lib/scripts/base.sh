@@ -65,6 +65,16 @@ case $1 in
         [ -e /home/$USER/dropoff/lib/config.ini ] && { echo "config.ini exists"; } || { echo "config.ini not found, creating it now"; touch /home/$USER/dropoff/lib/config.ini; echo "dbhost = $2" >> /home/$USER/dropoff/lib/config.ini; echo "dbport = 3306" >> /home/$USER/dropoff/lib/config.ini; echo "dbuser = DB" >> /home/$USER/dropoff/lib/config.ini; echo "dbpass = DB" >> /home/$USER/dropoff/lib/config.ini; cp -f /home/$USER/dropoff/lib/config.ini /home/$USER/scripts/config.ini.bak; }
         #echo "pull SQL tables and run init-db.php"
         #make the custom services running on boot
+        sudo cp -r /home/$USER/dropoff/services /etc/systemd/system/
+        sudo systemctl start registeruser.service
+        sudo systemctl enable registeruser.service
+        sudo systemctl start loginuser.service
+        sudo systemctl enable loginuser.service
+        sudo systemctl start updateuser.service
+        sudo systemctl enable updateuser.service
+        sudo systemctl start createtrivia.service
+        sudo systemctl enable createtrivia.service
+        
         ;;
     "API")
         sudo apt upgrade
