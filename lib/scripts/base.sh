@@ -16,18 +16,18 @@ case $1 in
         sudo apt update
         sudo apt upgrade
         sudo apt install php-json php-curl composer php-mbstring php-zip php-gd php php-bcmath
-		[ sudo systemctl status apache2 | grep "Status: install" ] && sudo apt install apache2
-        
+		[ sudo systemctl status apache2 | grep "Status: install" ] && { sudo apt install apache2; } 
+        sudo /etc/init.d/apache2 restart
         echo "setup apache to serve the app"
         #setup rsyslog to log to the MQ vm 
         #TODO fix the echo is not working
-        [ sudo systemctl status rsyslog | grep "Status: install" ] && { sudo apt install rsyslog; sudo chmod 666 /etc/rsyslog.conf; sudo echo "*.* @$2:514" >> /etc/rsyslog.conf; }
+        [ -e /etc/rsyslog.conf ] && { sudo apt install rsyslog; sudo chmod 666 /etc/rsyslog.conf; sudo echo "*.* @$2:514" >> /etc/rsyslog.conf; }
         sudo systemctl restart rsyslog
         #setup apache to serve the app from the live folder
-        [ -e /home/$USER/dropoff/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; sudo mkdir -p /home/$USER/dropoff/lib; }
-        [ -e /home/$USER/dropoff/lib/configmq.ini ] && { echo "mqconfig exists"; } || { echo "configmq.ini not found, creating it now"; sudo touch /home/$USER/dropoff/lib/configmq.ini; sudo chmod 660 /home/$USER/dropoff/configmq.ini; ./home/$USER/scripts/secretConfigs.sh $2 "APP"; cp -f /home/$USER/dropoff/lib/configmq.ini /home/$USER/scripts/configmq.ini.bak; }
-        #[ -e /home/$USER/live/lib/configmq.ini ] && { echo "configmq.ini not found, creating it now"; touch /home/$USER/live/lib/configmq.ini; echo "brokerhost = $2" >> /home/$USER/live/lib/configmq.ini; echo "brokerport = 5672" >> /home/$USER/live/lib/configmq.ini; echo "brokeruser = APP" >> /home/$USER/live/lib/configmq.ini; echo "brokerpass = APP" >> /home/$USER/live/lib/configmq.ini;}
-		;;
+        [ -e /home/$USER/dropoff/lib ] && { echo "lib found"; } || { echo "lib not found, creating it now"; sudo mkdir -p /home/$USER/dropoff/lib; }
+        [ -e /home/$USER/dropoff/lib/configrmq.ini ] && { echo "mqconfig exists"; } || { echo "configrmq.ini not found, creating it now"; sudo touch /home/$USER/dropoff/lib/configrmq.ini; sudo chmod 666 /home/$USER/dropoff/lib/configrmq.ini; ./home/$USER/scripts/secretConfigs.sh $2 "APP"; sudo cp -f /home/$USER/dropoff/lib/configrmq.ini /home/$USER/scripts/configrmq.ini.bak; }
+        ;;
+
 	"MQ")
         sudo apt update
         sudo apt upgrade
@@ -44,28 +44,28 @@ case $1 in
 &~' >> /etc/rsyslog.conf
         sudo systemctl restart rsyslog
         [ -e /home/$USER/dropoff/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; sudo mkdir -p /home/$USER/dropoff/lib; }
-        [ -e /home/$USER/dropoff/lib/configmq.ini ] && { echo "mqconfig exists"; } || { echo "configmq.ini not found, creating it now"; sudo touch /home/$USER/dropoff/lib/configmq.ini; ./home/$USER/scripts/secretConfigs.sh $2 "MQ"; cp -f /home/$USER/dropoff/lib/configmq.ini /home/$USER/scripts/configmq.ini.bak; }
+        [ -e /home/$USER/dropoff/lib/configrmq.ini ] && { echo "mqconfig exists"; } || { echo "configrmq.ini not found, creating it now"; sudo touch /home/$USER/dropoff/lib/configrmq.ini; ./home/$USER/scripts/secretConfigs.sh $2 "MQ"; cp -f /home/$USER/dropoff/lib/configrmq.ini /home/$USER/scripts/configrmq.ini.bak; }
         [ -x /home/$USER/scripts/rabbitActMaker.sh ] && { ./home/$USER/scripts/rabbitActMaker.sh; } || { sudo chmod +x home/$USER/scripts/rabbitActMaker.sh; ./home/$USER/scripts/rabbitActMaker.sh; }
 		;;
     "DB")
         sudo apt upgrade
         sudo apt update
-        [ -e /home/$USER/live/lib] && { echo ""; } || { sudo apt install php-json php-curl composer php-mbstring php-zip php-gd php php-bcmath; sudo mysql_secure_installation }
+        [ -e /home/$USER/live/lib] && { echo ""; } || { sudo apt install php-json php-curl composer php-mbstring php-zip php-gd php php-bcmath; sudo mysql_secure_installation; }
         # in the work \/
-        user="DB";
-        pass="DB";
-        sudo mysql -u $user -p$pass -e "CREATE DATABASE IF NOT EXISTS `$user`; GRANT ALL PRIVILEGES ON `$user`.* TO '$user'@'localhost' IDENTIFIED BY '$pass'; FLUSH PRIVILEGES;";
         
         [ sudo systemctl status mariadb-server | grep "Status: install" ] && sudo apt install mariadb-server
+        user="DB"
+        pass="DB"
+        sudo mysql -u $user -p$pass -e "CREATE DATABASE IF NOT EXISTS `$user`; GRANT ALL PRIVILEGES ON `$user`.* TO '$user'@'localhost' IDENTIFIED BY '$pass'; FLUSH PRIVILEGES;"
         #setup rsyslog to log to the MQ vm
         [ -e /etc/rsyslog.conf ] && { sudo chmod 666 /etc/rsyslog.conf; sudo echo "*.* @$2:514" >> /etc/rsyslog.conf; } || { echo "rsyslog not found"; sudo apt install rsyslog; }
         #setup to update or make the mq config file
         [ -e /home/$USER/dropoff/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; mkdir -p /home/$USER/dropoff/lib; }
-        [ -e /home/$USER/dropoff/lib/configmq.ini ] && { echo "mqconfig exists"; } || { echo "configmq.ini not found, creating it now"; touch /home/$USER/dropoff/lib/configmq.ini; ./home/$USER/scripts/secretConfigs.sh $2 "DB"; cp -f /home/$USER/dropoff/lib/configmq.ini /home/$USER/scripts/configmq.ini.bak; }
+        [ -e /home/$USER/dropoff/lib/configrmq.ini ] && { echo "mqconfig exists"; } || { echo "configrmq.ini not found, creating it now"; touch /home/$USER/dropoff/lib/configrmq.ini; ./home/$USER/scripts/secretConfigs.sh $2 "DB"; cp -f /home/$USER/dropoff/lib/configrmq.ini /home/$USER/scripts/configrmq.ini.bak; }
         [ -e /home/$USER/dropoff/lib/config.ini ] && { echo "config.ini exists"; } || { echo "config.ini not found, creating it now"; touch /home/$USER/dropoff/lib/config.ini; echo "dbhost = localhost" >> /home/$USER/dropoff/lib/config.ini; echo "dbport = 3306" >> /home/$USER/dropoff/lib/config.ini; echo "dbuser = DB" >> /home/$USER/dropoff/lib/config.ini; echo "dbpass = DB" >> /home/$USER/dropoff/lib/config.ini; cp -f /home/$USER/dropoff/lib/config.ini /home/$USER/scripts/config.ini.bak; }
         #echo "pull SQL tables and run init-db.php"
         #make the custom services running on boot
-        sudo cp -r /home/$USER/live/services /etc/systemd/system/
+        sudo cp -r /home/$USER/dropoff/services /etc/systemd/system/
         sudo systemctl start registeruser.service
         sudo systemctl enable registeruser.service
         sudo systemctl start loginuser.service
@@ -85,9 +85,11 @@ case $1 in
 
         #setup to update or make the mq config file
         [ -e /home/$USER/dropoff/lib] && { echo "lib found"; } || { echo "lib not found, creating it now"; mkdir -p /home/$USER/dropoff/lib; }
-        [ -e /home/$USER/dropoff/lib/configmq.ini ] && { echo "mqconfig exists"; } || { echo "configmq.ini not found, creating it now"; touch /home/$USER/dropoff/lib/configmq.ini; ./home/$USER/scripts/secretConfigs.sh $2 "API"; cp -f /home/$USER/dropoff/lib/configmq.ini /home/$USER/scripts/configmq.ini.bak; }
+        [ -e /home/$USER/dropoff/lib/configrmq.ini ] && { echo "mqconfig exists"; } || { echo "configrmq.ini not found, creating it now"; touch /home/$USER/dropoff/lib/configrmq.ini; ./home/$USER/scripts/secretConfigs.sh $2 "API"; cp -f /home/$USER/dropoff/lib/configrmq.ini /home/$USER/scripts/configrmq.ini.bak; }
         ;;
     *)
         echo "Usage: APP|MQ|API|DB|*for this MQ_IP username_onVM"
+        sudo chmod 666 /home/$USER/dropoff/
+        mkdir -p /home/$USER/dropoff/lib
         ;;
     esac
