@@ -81,7 +81,12 @@ button{
   border: 3px solid #dbe4ed; /* Border color is optional */  
 
 }
-.h1, h1{
+h1{
     font-size: 2.5rem;
     color: black
 }
+.clear p{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}    
