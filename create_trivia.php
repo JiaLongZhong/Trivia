@@ -45,7 +45,7 @@
             <input type="submit" id="trivia_submit" name="submit" value="Create" />
         </form>
     </div>
-    <div>
+    <divc class="list">
         <?php list_created_games(); ?>
     </div>
     <?php include_once(__DIR__ . "/partials/footer.php"); ?>
