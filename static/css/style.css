@@ -85,7 +85,7 @@ h1{
     font-size: 2.5rem;
     color: black
 }
-.clear p{
+.list p{
   display: flex;
   align-items: center;
   justify-content: center;
