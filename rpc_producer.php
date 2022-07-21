@@ -16,13 +16,20 @@ class RpcClient
 
     public function __construct()
     {
-        require_once(__DIR__ . '/lib/configrmq.ini');
+
+        $creds = parse_ini_file(__DIR__ . "/lib/configrmq.ini");
+        $this->brokerhost = $creds["brokerhost"];
+        $this->brokerport = $creds["brokerport"];
+        $this->brokeruser = $creds["brokeruser"];
+        $this->brokerpass = $creds["brokerpass"];
+
         $this->connection = new AMQPStreamConnection(
-            $brokerhost,
-            $brokerport,
-            $brokeruser,
-            $brokerpass
+            $this->brokerhost,
+            $this->brokerport,
+            $this->brokeruser,
+            $this->brokerpass
         );
+
         $this->channel = $this->connection->channel();
         list($this->callback_queue,,) = $this->channel->queue_declare(
             "",

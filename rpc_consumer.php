@@ -6,8 +6,11 @@ require_once __DIR__ . '/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
+
+
 class RpcServer
 {
+
 
 	private $connection;
 	private $channel;
@@ -18,16 +21,23 @@ class RpcServer
 
 	public function __construct($queue_name)
 	{
-		require_once(__DIR__ . '/lib/configrmq.ini');
+
+		$creds = parse_ini_file(__DIR__ . "/configrmq.ini");
+		$this->brokerhost = $creds["brokerhost"];
+		$this->brokerport = $creds["brokerport"];
+		$this->brokeruser = $creds["brokeruser"];
+		$this->brokerpass = $creds["brokerpass"];
+
+
 		$this->connection = new AMQPStreamConnection(
-			$brokerhost,
-			$brokerport,
-			$brokeruser,
-			$brokerpass
+			$this->brokerhost,
+			$this->brokerport,
+			$this->brokeruser,
+			$this->brokerpass
 		);
 
 		$this->channel = $this->connection->channel();
-		$this->$queue = $this->channel->queue_declare(
+		$this->queue = $this->channel->queue_declare(
 			$queue_name,
 			false,
 			false,

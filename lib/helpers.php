@@ -94,12 +94,14 @@ function get_trivia_games()
     }
 }
 
+//This function automatically lists all the trivia games that the user has created with buttons that take them to an edit page
 function list_created_games()
 {
     $trivia_games = get_trivia_games();
     if (isset($trivia_games)) {
         foreach ($trivia_games as $game) {
-            echo "<li>" . $game["title"] . "</li>";
+            //output button with link to edit_trivia.php and trivia id as a get parameter
+            echo "<a href='edit_trivia.php?id=" . $game["id"] . "&" . "title=" . $game["title"] . "'><button class='btn btn-primary my-2'>" . $game["title"] . "</button></a><br>";
         }
     }
 }
