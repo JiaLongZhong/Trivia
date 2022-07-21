@@ -1,6 +1,10 @@
 *test*
-config*
+config.php
 *.log
 host*
 test*
 logs/
+*.ini
+rabbitActMaker.sh
+allIPs.txt
+lib/scripts/secretConfigs.sh

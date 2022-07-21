@@ -8,12 +8,14 @@ function getDB()
     global $db;
     if (!isset($db)) {
         try {
+
             //require_once(__DIR__ . "/config.ini");
             $creds = parse_ini_file(__DIR__ . "/config.ini");
             $dbhost = $creds["dbhost"];
             $dbdatabase = $creds["dbdatabase"];
             $dbuser = $creds["dbuser"];
             $dbpass = $creds["dbpass"];
+
 
             $connection_string = "mysql:host=$dbhost;dbname=$dbdatabase;charset=utf8mb4";
             $db = new PDO($connection_string, $dbuser, $dbpass);

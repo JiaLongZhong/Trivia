@@ -21,11 +21,13 @@ class RpcServer
 
 	public function __construct($queue_name)
 	{
+
 		$creds = parse_ini_file(__DIR__ . "/configrmq.ini");
 		$this->brokerhost = $creds["brokerhost"];
 		$this->brokerport = $creds["brokerport"];
 		$this->brokeruser = $creds["brokeruser"];
 		$this->brokerpass = $creds["brokerpass"];
+
 
 		$this->connection = new AMQPStreamConnection(
 			$this->brokerhost,
