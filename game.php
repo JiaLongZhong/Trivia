@@ -53,15 +53,6 @@ if (!is_logged_in()) {
         </div>
     </div>
 
-    <div class="button-container">
-        <p class="button-prefix">C</p>
-        <p class="button-text" id="answer3"></p>
-    </div>
-    <div class="button-container">
-        <p class="button-prefix">D</p>
-        <p class="button-text" id="answer4"></p>
-    </div>
-
     </div>
     </div>
     <script>
