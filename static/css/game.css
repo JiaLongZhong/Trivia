@@ -26,7 +26,7 @@ body{
     background: var(--light-color);
     padding: 1.5rem 4rem 3rem 4rem;
     width: 600px;
-    height: 680px;
+    height: 750px;
     border-top-left-radius: 1.5rem;
     border-bottom-right-radius: 1.5rem;
     position: relative;
@@ -36,18 +36,21 @@ body{
     text-align: center;
     font-size: 2rem;
 }
-.quiz-score{
-    text-align: right;
-    font-weight: 600;
+.quiz-score, .quiz-timer, .quiz-number{
+    text-align: center;
+    font-weight: 200;
     font-size: 1.2rem;
     margin-bottom: 1rem;
     border: 5px solid var(--grey-color);
     font-weight: bold;
-    width: 100px;
+    width: 150px;
     height: 50px;
     margin: .5rem auto 1rem auto;
     color: var(--light-purple-color);
+    display: inline-flex;
+    
 }
+
 .quiz-question{
     font-size: 1.2rem;
     text-align: center;
@@ -186,8 +189,3 @@ p{
     color: black;
     font-size: 24px;
 }
-
-
-
-
-
