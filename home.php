@@ -27,8 +27,8 @@ if (!is_logged_in()) {
                                     require_once(__DIR__ . "/lib/helpers.php");
                                     echo '<p>Welcome ' . get_user_fullname() . '</p>';
                                     ?>
-                                    <a class="btn btn-outline-light btn-lg m-2" href="#" role="button" rel="nofollow" target="_blank">Create Room</a>
-                                    <a class="btn btn-outline-light btn-lg m-2" href="#" role="button" rel="nofollow" target="_blank">Join</a>
+                                    <a class="btn btn-outline-light btn-lg m-2" href="create_trivia.php" role="button" rel="nofollow" target="_blank">Create Trivia</a>
+                                    <a class="btn btn-outline-light btn-lg m-2" href="game.php" role="button" rel="nofollow" target="_blank">Play Trivia Game</a>
                                 </div>
                             </div>
                         </div>
