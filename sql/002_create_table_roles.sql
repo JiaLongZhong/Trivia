@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS 'Roles' (
-    `id`         int auto_increment not null,
+    id         int auto_increment,
     `name`      varchar(60) not null,
     `description` varchar(100) default '',
     `created`    timestamp NOT NULL default current_timestamp,

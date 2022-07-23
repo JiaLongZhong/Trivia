@@ -8,7 +8,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=$USER
-ExecStart=/usr/bin/env php /home/$USER/live/rpc_trivia_consumer.php
+ExecStart=/usr/bin/env php /home/'$user'/live/rpc_trivia_consumer.php
 
 [Install]
 WantedBy=multi-user.target

@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS  `Userroles`
 (
-    `id`         int auto_increment not null,
+    id         int auto_increment not null,
     `user_id`    int not null,
     `role_id`  int not null,
     `created`    timestamp default current_timestamp,
