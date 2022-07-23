@@ -21,7 +21,7 @@ if (!is_logged_in()) {
                 <div class="quiz-head">
                     <h1 class="quiz-title">Quiz Game</h1>
                     <div class="quiz-number flex">
-                        <span id="question-number">Question:</span>/<span id="total-question"></span>
+                        <span>Question:&nbsp</span><span id="question-number"></span>/<span id="total-question"></span>
                     </div>
                     <div class="quiz-score flex">
                         <span>Score:&nbsp </span><span id="total-score">Score:</span>
@@ -49,7 +49,6 @@ if (!is_logged_in()) {
                     <button type="button" id="play-again">Play Again!</button>
                 </div>
             </div>
-
         </div>
     </div>
 
