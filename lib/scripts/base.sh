@@ -98,10 +98,8 @@ case $1 in
             echo "mariadb is already installed"
         else
             sudo apt install mariadb-server
-            user="DB"
-            pass="DB"
-            sudo mysql -u $user -p$pass -e "CREATE DATABASE IF NOT EXISTS `$user`; GRANT ALL PRIVILEGES ON `$user`.* TO '$user'@'localhost' IDENTIFIED BY '$pass'; FLUSH PRIVILEGES;"
-        fi
+            [ -x ~/scripts/DBuserMaker.sh ] && { ~/scripts/DBuserMaker.sh; } || { sudo chmod +x ~/scripts/DBuserMaker.sh; ~/scripts/DBuserMaker.sh; }
+            fi
         #setup rsyslog to log to the MQ vm
         [ -e /etc/rsyslog.conf ] && { sudo chmod 666 /etc/rsyslog.conf; sudo echo "*.* @$2:514" >> /etc/rsyslog.conf; } || { echo "rsyslog not found"; sudo apt install rsyslog; }
         #setup to update or make the mq config file
