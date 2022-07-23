@@ -83,6 +83,24 @@ $callback = function ($req) {
 	$req->ack();
 };
 
+echo " [x] Awaiting RPC API requests\n";
+$callback = function ($req) {
+	$n = $req->body;
+	$consumed_data = json_decode($n, true);
+	$return_msg = json_encode(apiListener($consumed_data));
+	$msg = new AMQPMessage(
+		$return_msg,
+		array('correlation_id' => $req->get('correlation_id'))
+	);
+
+	$req->delivery_info['channel']->basic_publish(
+		$msg,
+		'',
+		$req->get('reply_to')
+	);
+	$req->ack();
+};
+
 $channel->basic_qos(null, 1, null);
 $channel->basic_consume('API_queue', '', false, false, false, false, $callback);
 while (count($channel->callbacks) || $channel->is_consuming() || $channel->is_open()) {
