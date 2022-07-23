@@ -60,6 +60,7 @@ function api_pull($m)
         write_log("Error: " . $errors, "api_log.log");
     } else {
         echo "Success: " . $response['response_code'] . "\n";
+        echo "Data: " . $response['results'] . "\n";
         write_log("Success: " . $response['response_code'], "api_log.log");
     }
     return $data;
