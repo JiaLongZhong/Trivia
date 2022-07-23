@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/lib/configrmq.ini');
+require_once(__DIR__ . '/lib/configrmq.php');
 require_once(__DIR__ . "/lib/helpers.php");
 require_once __DIR__ . '/vendor/autoload.php';
 
