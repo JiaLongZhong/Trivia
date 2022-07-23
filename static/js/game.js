@@ -8,7 +8,7 @@ const _totalQuestion = document.getElementById('total-question');
 const _timer = document.getElementById('timer');
 const _totalScore = document.getElementById('total-score');
 
-let correctAnswer = "", questionNum = 0, totalQuestion = 10, point=1000, totalScore=0, mutiplers=1, time = 60, rapidpoint=0;
+let correctAnswer = "", questionNum = 1, totalQuestion = 10, point=1000, totalScore=0, mutiplers=1, time = 60, rapidpoint=0;
 
 // load question from API
 async function loadQuestion(){
@@ -26,7 +26,7 @@ var interval = setInterval(function(){
   if (time === 0){
     document.getElementById('timer').innerHTML='Done';
     mutiplers = 1;
-    //quizconsolelog();
+    quizconsolelog();
     _result.innerHTML = `<p><i class = "fas fa-times"></i>Time is up!</p> <small><b>Correct Answer: </b>${correctAnswer}</small>`;
     checkCount();
     _checkBtn.disabled = false;
@@ -99,11 +99,11 @@ function checkAnswer(){
             rapidpoint = 1/time * point;
             totalScore += (point-rapidpoint) * mutiplers;
             mutiplers += 0.1;
-            //quizconsolelog();
+            quizconsolelog();
             _result.innerHTML = `<p><i class = "fas fa-check"></i>Correct Answer!</p>`;
         } else {
             mutiplers = 1;
-            //quizconsolelog();
+            quizconsolelog();
             _result.innerHTML = `<p><i class = "fas fa-times"></i>Incorrect Answer!</p> <small><b>Correct Answer: </b>${correctAnswer}</small>`;
         }
         checkCount();
@@ -121,13 +121,17 @@ function HTMLDecode(textString) {
 
 
 function checkCount(){
-   questionNum++;
     time = 60;
-    setCount();
-    
-    if(questionNum == totalQuestion){
+    if(questionNum < 10){
+        questionNum++;
         setTimeout(function(){
-            console.log("");
+            loadQuestion();
+            setCount();
+        }, 1000);
+    } else {
+        setTimeout(function(){
+            console.log("Trivia Over!");
+            setCount();
         }, 5000);
 
         totalScore = Math.round(totalScore);
@@ -135,10 +139,6 @@ function checkCount(){
         _playAgainBtn.style.display = "block";
         _checkBtn.style.display = "none";
         clearInterval(interval);
-    } else {
-        setTimeout(function(){
-            loadQuestion();
-        }, 1000);
     }
 }
 
@@ -151,7 +151,7 @@ function setCount(){
 
 
 function restartQuiz(){
-    questionNum = 0;
+    questionNum = 1;
     totalScore = 0;
     _playAgainBtn.style.display = "none";
     _checkBtn.style.display = "block";
