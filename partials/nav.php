@@ -23,7 +23,7 @@
                 <?php endif; ?>
                 <?php if (has_role("admin")) : ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Admin Functions</a>
+                        <a class="nav-link" href="admin.php">Admin Functions</a>
                     </li>
                 <?php endif; ?>
                 <li class="nav-item">

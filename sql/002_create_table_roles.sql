@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS 'Roles' (
+CREATE TABLE IF NOT EXISTS `Roles` (
     `id`         int auto_increment not null,
     `name`      varchar(100)       not null unique,
     `description` varchar(100) default '',

@@ -11,9 +11,10 @@ if (!is_logged_in()) {
     <title><?php echo ucfirst(substr(basename(__FILE__), 0, -4)); ?></title>
     <?php require_once(__DIR__ . "/partials/homeheader.php"); ?>
 </head>
+
 <body>
     <?php require_once(__DIR__ . "/partials/nav.php"); ?>
-
+    <?php echo var_dump($_SESSION); ?>
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -41,7 +42,7 @@ if (!is_logged_in()) {
         </div>
     </div>
 
-        <?php include_once(__DIR__ . "/partials/footer.php"); ?>
-    </body>
+    <?php include_once(__DIR__ . "/partials/footer.php"); ?>
+</body>
 
 </html>
