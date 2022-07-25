@@ -27,7 +27,7 @@ function api_call($n)
     $stmt = $db->prepare($query);
     $random_name = uniqid();
     $params = array(
-        "title" => "Tivia " . $random_name,
+        "title" => "Trivia " . $random_name,
         "description" => "This is a trivia game with " . $n['number_of_questions'] . " questions",
         "visibility" => 0,
         "user_id" => $n['userid']

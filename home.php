@@ -14,7 +14,6 @@ if (!is_logged_in()) {
 
 <body>
     <?php require_once(__DIR__ . "/partials/nav.php"); ?>
-    <?php echo var_dump($_SESSION); ?>
     <div class="container">
         <div class="row">
             <div class="col-12">

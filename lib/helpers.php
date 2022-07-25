@@ -105,3 +105,35 @@ function list_created_games()
         }
     }
 }
+
+function get_trivia_info()
+{
+    if (isset($_SESSION["trivia_info"])) {
+        return $_SESSION["trivia_info"];
+    }
+}
+
+function list_trivia_info()
+{
+    $q_id = null;
+    if (isset($_SESSION["trivia_info"])) {
+        $question_counter = 0;
+        foreach ($_SESSION["trivia_info"] as $game) {
+
+            if ($q_id != $game["question_id"]) {
+                $q_id = $game["question_id"];
+                $question_counter++;
+            }
+
+            echo "<h4>" . $question_counter . "</h4>";
+            echo "<h2>" . $game["question"] . "</h2>";
+            echo "<p>" . $game["answer"] . "</p>";
+            if ($game["isCorrect"] == 1) {
+                echo "<p class='correct'>Correct!</p>";
+            } else {
+                echo "<p class='incorrect'>Incorrect!</p>";
+            }
+            $q_id = $game["question_id"];
+        }
+    }
+}
