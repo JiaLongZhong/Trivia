@@ -17,6 +17,7 @@ class ComposerStaticInit903a09566504ed42167073616b9e8a20
         ),
         'P' => 
         array (
+            'Plasticbrain\\FlashMessages\\' => 27,
             'PhpAmqpLib\\' => 11,
             'ParagonIE\\ConstantTime\\' => 23,
         ),
@@ -26,6 +27,10 @@ class ComposerStaticInit903a09566504ed42167073616b9e8a20
         'phpseclib3\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+        ),
+        'Plasticbrain\\FlashMessages\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/plasticbrain/php-flash-messages/src',
         ),
         'PhpAmqpLib\\' => 
         array (

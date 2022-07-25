@@ -13,6 +13,7 @@
         <?php
         require_once(__DIR__ . "/lib/helpers.php");
         ?>
+        <?php show_flash_messages(); ?>
         <form id="login" class="form" method="POST">
             <h4>Log In Here</h4>
             <label for="user_email">Username</label>
@@ -52,8 +53,9 @@
                 $login_rpc = new RpcClient();
                 $response = json_decode($login_rpc->call($_POST, 'login_queue'), true);
                 if ($response["status"] == "error") {
-                    echo "Login unsuccessful";
+                    error_msg("Login failed. Please try again.");
                 } else {
+                    success_msg("Login successful");
                     set_sess_var("fname", $response["fname"]);
                     set_sess_var("lname", $response["lname"]);
                     set_sess_var("username", $response["username"]);
