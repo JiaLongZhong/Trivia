@@ -13,6 +13,7 @@ if (!is_logged_in()) {
 </head>
 
 <body>
+    <?php show_flash_messages(); ?>
     <?php require_once(__DIR__ . "/partials/nav.php"); ?>
     <div class="container">
         <div class="row">

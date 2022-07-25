@@ -1,6 +1,7 @@
 <?php
 session_start(); //Starting a new sesion
 require_once(__DIR__ . "/db.php");
+require_once(__DIR__ . "/../vendor/autoload.php");
 
 function set_sess_var($sess_name, $db_var)
 {
@@ -136,4 +137,22 @@ function list_trivia_info()
             $q_id = $game["question_id"];
         }
     }
+}
+
+function error_msg($message)
+{
+    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error($message);
+}
+
+function success_msg($message)
+{
+    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success($message);
+}
+
+function show_flash_messages()
+{
+    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->display();
 }
