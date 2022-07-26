@@ -1,6 +1,7 @@
 <?php
 session_start(); //Starting a new sesion
 require_once(__DIR__ . "/db.php");
+require_once(__DIR__ . "/../vendor/autoload.php");
 
 function set_sess_var($sess_name, $db_var)
 {
@@ -104,4 +105,54 @@ function list_created_games()
             echo "<a href='edit_trivia.php?id=" . $game["id"] . "&" . "title=" . $game["title"] . "'><button class='btn btn-primary my-2'>" . $game["title"] . "</button></a><br>";
         }
     }
+}
+
+function get_trivia_info()
+{
+    if (isset($_SESSION["trivia_info"])) {
+        return $_SESSION["trivia_info"];
+    }
+}
+
+function list_trivia_info()
+{
+    $q_id = null;
+    if (isset($_SESSION["trivia_info"])) {
+        $question_counter = 0;
+        foreach ($_SESSION["trivia_info"] as $game) {
+
+            if ($q_id != $game["question_id"]) {
+                $q_id = $game["question_id"];
+                $question_counter++;
+            }
+
+            echo "<h4>" . $question_counter . "</h4>";
+            echo "<h2>" . $game["question"] . "</h2>";
+            echo "<p>" . $game["answer"] . "</p>";
+            if ($game["isCorrect"] == 1) {
+                echo "<p class='correct'>Correct!</p>";
+            } else {
+                echo "<p class='incorrect'>Incorrect!</p>";
+            }
+            $q_id = $game["question_id"];
+        }
+    }
+}
+
+function error_msg($message)
+{
+    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->error($message);
+}
+
+function success_msg($message)
+{
+    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->success($message);
+}
+
+function show_flash_messages()
+{
+    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->display();
 }

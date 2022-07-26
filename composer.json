@@ -8,6 +8,7 @@
         }
     ],
     "require": {
-        "php-amqplib/php-amqplib": "^2.10"
+        "php-amqplib/php-amqplib": "^2.10",
+        "plasticbrain/php-flash-messages": "^1.0"
     }
 }
