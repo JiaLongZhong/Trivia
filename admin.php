@@ -56,7 +56,7 @@ if (isset($_POST["api_submit"])) {
         require_once(__DIR__ . "/rpc_producer.php");
         $update_rpc = new RpcClient();
         $response = json_decode($update_rpc->call($_POST, 'api_queue'), true);
-        if ($response["status"] == "status") {
+        if ($response["status"] == "success") {
             set_sess_var("trivia_games", $response["trivia_games"]);
             echo "Update successful";
         } else {
