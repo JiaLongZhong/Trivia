@@ -62,4 +62,8 @@ $(document).ready(function () {
             console.log(counter);
         }
     });
+    // Show edit form on button click
+    $("#edit-trivia").click(function () {
+        $("#edit-trivia-form").slideToggle();
+    });
 });

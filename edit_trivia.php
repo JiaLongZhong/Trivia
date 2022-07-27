@@ -16,6 +16,17 @@
     }
     ?>
     <h2 class="text-uppercase"><?php echo $_GET["title"]; ?></h2>
+    <!-- Create button to bring up edit form -->
+    <button id="edit-trivia">Edit Name</button>
+    <form id="edit-trivia-form" class="form" method="POST" style="display: none;">
+        <label for="trivia-name">Name</label>
+        <input type="text" id="trivia-name" name="trivia_name" />
+        <br>
+        <label for="description">Description</label>
+        <input type="text" id="trivia-description" name="trivia_description" />
+        <br>
+        <input type="submit" id="trivia_submit" name="edit" value="Edit" />
+    </form>
     <?php
     if (isset($_GET["id"])) {
         $trivia_id = $_GET["id"];
@@ -34,6 +45,39 @@
             $response = json_decode($trivia_rpc->call(array("trivia_id" => $trivia_id), 'trivia_info_queue'), true);
             if ($response["status"] == "success") {
                 set_sess_var("trivia_info", $response["trivia_games_info"]);
+            }
+        }
+
+        if (isset($_POST["edit"])) {
+            $trivia_name = $_POST["trivia_name"];
+            $trivia_description = $_POST["trivia_description"];
+            $user_id = get_user_id();
+            $action = "edit";
+            $isValid = true;
+            if (!isset($trivia_name) || !isset($trivia_description)) {
+                $isValid = false;
+            }
+            if ($isValid) {
+                require_once(__DIR__ . "/rpc_producer.php");
+                $trivia_rpc = new RpcClient();
+                $response = json_decode($trivia_rpc->call(
+                    array(
+                        "trivia_id" => $trivia_id,
+                        "trivia_name" => $trivia_name,
+                        "trivia_description" => $trivia_description,
+                        "id" => $user_id,
+                        "action" => $action
+                    ),
+                    'trivia_queue'
+                ), true);
+                if ($response["status"] == "success") {
+                    success_msg("Trivia edited successfully");
+                    set_sess_var("trivia_games", $response["trivia_games"]);
+                    header("Location: create_trivia.php");
+                } else {
+                    error_msg("Error editing trivia");
+                    header("Location: create_trivia.php");
+                }
             }
         }
     }
