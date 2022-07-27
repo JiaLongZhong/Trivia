@@ -9,6 +9,7 @@
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
 
 <body>
+
     <!-- Add Heading -->
     <h2 class="text-center">Get New Trivia Games</h2>
     <!-- Create a form with hidden data fields for username -->
@@ -22,6 +23,7 @@
     </form>
 </body>
 <?php
+show_flash_messages();
 if (isset($_POST["api_submit"])) {
     $uid = null;
     $admin_username = null;
@@ -58,10 +60,11 @@ if (isset($_POST["api_submit"])) {
         $response = json_decode($update_rpc->call($_POST, 'api_queue'), true);
         if ($response["status"] == "success") {
             set_sess_var("trivia_games", $response["trivia_games"]);
-            echo "Update successful";
+            success_msg("Successfully updated trivia games");
+            header("Location: admin.php");
         } else {
-            echo "Update unsuccessful\n";
-            echo var_dump($response);
+            error_msg("Error updating trivia games");
+            header("Location: admin.php");
         }
     }
 }
