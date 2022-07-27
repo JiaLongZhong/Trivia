@@ -6,10 +6,10 @@
 
 
 
-[ ! -d "/home/$USER/dropoff" ] &&  sudo mkdir dropoff
-[ ! -d "/home/$USER/backup" ] && sudo mkdir backup
-[ ! -d "/home/$USER/live" ] && sudo mkdir live
-[ ! -d "/home/$USER/scripts" ] && { sudo mkdir scripts; echo "the other scripts are missing"; exit 1; }
+[ ! -d "/home/$USER/dropoff" ] &&  mkdir dropoff
+[ ! -d "/home/$USER/backup" ] && mkdir backup
+[ ! -d "/home/$USER/live" ] && mkdir live
+[ ! -d "/home/$USER/scripts" ] && { mkdir scripts; echo "the other scripts are missing"; exit 1; }
 
 service_exists() {
     local n=$1
@@ -25,7 +25,7 @@ case $1 in
         sudo apt update
         sudo apt upgrade
         sudo apt install php-json php-curl composer php-mbstring php-zip php-gd php php-bcmath composer
-		[ sudo systemctl status apache2 | grep "Status: install" ] && { sudo apt install apache2; } 
+		#[ sudo systemctl status apache2 | grep "Status: install" ] && { sudo apt install apache2; } 
         if service_exists apache2; then
             echo "apache2 is installed"
         else
@@ -98,10 +98,8 @@ case $1 in
             echo "mariadb is already installed"
         else
             sudo apt install mariadb-server
-            user="DB"
-            pass="DB"
-            sudo mysql -u $user -p$pass -e "CREATE DATABASE IF NOT EXISTS `$user`; GRANT ALL PRIVILEGES ON `$user`.* TO '$user'@'localhost' IDENTIFIED BY '$pass'; FLUSH PRIVILEGES;"
-        fi
+            [ -x ~/scripts/DBuserMaker.sh ] && { ~/scripts/DBuserMaker.sh; } || { sudo chmod +x ~/scripts/DBuserMaker.sh; ~/scripts/DBuserMaker.sh; }
+            fi
         #setup rsyslog to log to the MQ vm
         [ -e /etc/rsyslog.conf ] && { sudo chmod 666 /etc/rsyslog.conf; sudo echo "*.* @$2:514" >> /etc/rsyslog.conf; } || { echo "rsyslog not found"; sudo apt install rsyslog; }
         #setup to update or make the mq config file
@@ -126,10 +124,10 @@ case $1 in
     "API")
         sudo apt upgrade
         sudo apt update
-        sudo apt install php-json php-curl composer phpmyadmin php-mbstring php-zip php-gd
+        sudo apt install php-json php-curl composer php-mbstring php-zip php-gd
         echo "pulls API files and runs ~init-api.php"
         #check and install rsyslog with the correct config
-        [ sudo systemctl status rsyslog | grep "Status: install" ] && { sudo apt install rsyslog; sudo chmod 666 /etc/rsyslog.conf; sudo echo "*.* @$2:514" >> /etc/rsyslog.conf; }
+        [ ! -e /etc/rsyslog.conf ] && { sudo apt install rsyslog; sudo chmod 666 /etc/rsyslog.conf; sudo echo "*.* @$2:514" >> /etc/rsyslog.conf; }
 
         #setup to update or make the mq config file
         [ -e /home/$USER/dropoff/lib ] && { echo "lib found"; } || { echo "lib not found, creating it now"; mkdir -p /home/$USER/dropoff/lib; }

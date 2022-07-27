@@ -1,9 +1,8 @@
 CREATE TABLE IF NOT EXISTS  `Userroles`
 (
-    `id`         int auto_increment not null,
-    `user_id`    int,
-    `role_id`  int,
-    `is_active`  TINYINT(1) default 1,
+    id         int auto_increment not null,
+    `user_id`    int not null,
+    `role_id`  int not null,
     `created`    timestamp default current_timestamp,
     `modified`   timestamp default current_timestamp on update current_timestamp,
     PRIMARY KEY (`id`),

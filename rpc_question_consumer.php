@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . '/lib/configrmq.php');
 require_once(__DIR__ . "/lib/helpers.php");
-require_once __DIR__ . '/vendor/autoload.php';
+require_once (__DIR__ . '/vendor/autoload.php');
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -67,6 +67,11 @@ function QuestionSubmit($n)
 	$stmt = $db->prepare($query);
 	$r = $stmt->execute($params);
 	$e = $stmt->errorInfo();
+	$query = "SELECT LAST_INSERT_ID()";
+	$stmt2 = $db->prepare($query);
+	$r2 = $stmt2->execute();
+	$e2 = $stmt2->errorInfo();
+	echo $r2;
 	if ($e[0] == "00000") {
 		$response = array(
 			"status" => "success",
@@ -74,10 +79,11 @@ function QuestionSubmit($n)
 		);
 		write_log("question added success: " . $n["user"], $log_file_name);
 		//submit the answers to the answer table
-		answerSubmit(array("user_id" => $n["user"], "question_id" => $n["question_id"], "answer" => $n["answer1"], "isCorrect" => 1));
-		answerSubmit(array("user_id" => $n["user"], "question_id" => $n["question_id"], "answer" => $n["answer2"], "isCorrect" => 0));
-		answerSubmit(array("user_id" => $n["user"], "question_id" => $n["question_id"], "answer" => $n["answer3"], "isCorrect" => 0));
-		answerSubmit(array("user_id" => $n["user"], "question_id" => $n["question_id"], "answer" => $n["answer4"], "isCorrect" => 0));
+		//TODO make question_id match the question_id in the question table
+		answerSubmit(array("user_id" => $n["user"], "question_id" => $r2, "answer" => $n["answer1"], "isCorrect" => 1));
+		answerSubmit(array("user_id" => $n["user"], "question_id" => $r2, "answer" => $n["answer2"], "isCorrect" => 0));
+		answerSubmit(array("user_id" => $n["user"], "question_id" => $r2, "answer" => $n["answer3"], "isCorrect" => 0));
+		answerSubmit(array("user_id" => $n["user"], "question_id" => $r2, "answer" => $n["answer4"], "isCorrect" => 0));
 	} elseif ($e[0] == "23000") {
 		$response = array(
 			"status" => "error",

@@ -1,4 +1,5 @@
-<?php
+<?php 
+//api consumer to pull from api and insert into db over question_queue
 
 require_once(__DIR__ . '/lib/configrmq.php');
 require_once(__DIR__ . "/lib/helpers.php");
