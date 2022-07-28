@@ -9,3 +9,4 @@ rabbitActMaker.sh
 allIPs.txt
 lib/scripts/secretConfigs.sh
 lib/scripts/DBuserMaker.sh
+result.php

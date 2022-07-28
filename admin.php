@@ -7,6 +7,14 @@
 </head>
 
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
+<?php
+if (!is_logged_in() || !has_role("Admin")) {
+    error_msg("You are not logged in or you do not have permission to access this page");
+    show_flash_messages();
+    die();
+}
+
+?>
 
 <body>
 
@@ -17,7 +25,7 @@
         <input type="number" id="userid" name="userid" value="<?php echo get_user_id(); ?>" hidden readonly />
         <input type="text" id="admin_email" name="admin_email" value="<?php echo get_email(); ?>" hidden readonly />
         <input type="text" id="api_command" name="api_command" value="update-trivia" hidden readonly />
-        <label for="number_of_games">Number of Games</label>
+        <label for="number_of_games">Number of Questions</label>
         <input type="number" id="number_of_questions" name="number_of_questions" max="50" min="1" step="1" />
         <input type="submit" id="api_submit" name="api_submit" value="Submit" />
     </form>
