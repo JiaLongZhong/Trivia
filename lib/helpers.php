@@ -144,6 +144,18 @@ function success_msg($message)
     $msg->success($message);
 }
 
+function warning_msg($message)
+{
+    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->warning($message);
+}
+
+function info_msg($message)
+{
+    $msg = new \Plasticbrain\FlashMessages\FlashMessages();
+    $msg->info($message);
+}
+
 function show_flash_messages()
 {
     $msg = new \Plasticbrain\FlashMessages\FlashMessages();

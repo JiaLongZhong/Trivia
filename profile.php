@@ -34,79 +34,77 @@
             </form>
         </div>
     </div>
-    <?php include_once(__DIR__ . "/partials/footer.php"); ?>
-</body>
-<?php
-if (isset($_POST["submit"])) {
-    $uid = null;
-    $username = null;
-    $current_password = null;
-    $new_password = null;
-    $confirm_password = null;
-    if (isset($_POST["userid"])) {
-        $uid = $_POST["userid"];
-    }
-    if (isset($_POST["new_username"])) {
-        $username = $_POST["new_username"];
-    }
-    if (isset($_POST["current-password"])) {
-        $current_password = $_POST["current-password"];
-    }
-    if (isset($_POST["new-password"])) {
-        $new_password = $_POST["new-password"];
-    }
-    if (isset($_POST["confirm-password"])) {
-        $confirm_password = $_POST["confirm-password"];
-    }
+    <?php
+    if (isset($_POST["submit"])) {
+        $uid = null;
+        $username = null;
+        $current_password = null;
+        $new_password = null;
+        $confirm_password = null;
+        if (isset($_POST["userid"])) {
+            $uid = $_POST["userid"];
+        }
+        if (isset($_POST["new_username"])) {
+            $username = $_POST["new_username"];
+        }
+        if (isset($_POST["current-password"])) {
+            $current_password = $_POST["current-password"];
+        }
+        if (isset($_POST["new-password"])) {
+            $new_password = $_POST["new-password"];
+        }
+        if (isset($_POST["confirm-password"])) {
+            $confirm_password = $_POST["confirm-password"];
+        }
 
-    $isValid = true;
-    if ($current_password == null || $uid == null) {
-        echo "Please enter your current password";
-        $isValid = false;
-    }
+        $isValid = true;
+        if ($current_password == null || $uid == null) {
+            info_msg("Please enter your current password");
+            $isValid = false;
+        }
 
-    if ($username == get_username()) {
-        $isValid = false;
-    }
+        if ($username == get_username()) {
+            $isValid = false;
+        }
 
-    if ($username == null) {
-        $username = get_username();
-    }
+        if ($username == null) {
+            $username = get_username();
+        }
 
 
-    if ($new_password == null) {
-        $new_password = "";
-    }
+        if ($new_password == null) {
+            $new_password = "";
+        }
 
-    if ($new_password != $confirm_password) {
-        $isValid = false;
-    }
+        if ($new_password != $confirm_password) {
+            info_msg("New passwords do not match");
+            $isValid = false;
+        }
 
-    if ($isValid) {
-        $update_array = array(
-            "uid" => $uid,
-            "username" => $username,
-            "current_password" => $current_password,
-            "new_password" => $new_password
-        );
+        if ($isValid) {
+            $update_array = array(
+                "uid" => $uid,
+                "username" => $username,
+                "current_password" => $current_password,
+                "new_password" => $new_password
+            );
 
-        require_once(__DIR__ . "/rpc_producer.php");
-        $update_rpc = new RpcClient();
-        $response = json_decode($update_rpc->call($update_array, 'update_queue'), true);
-        echo var_dump($response);
-        if ($response["status"] == "success") {
-            echo "Profile Updated";
-            unset($_SESSION["username"]);
-            set_sess_var("username", $response["username"]);
-            header("Location: /profile.php");
-        } else {
-            echo "Error Updating Profile";
+            require_once(__DIR__ . "/rpc_producer.php");
+            $update_rpc = new RpcClient();
+            $response = json_decode($update_rpc->call($update_array, 'update_queue'), true);
+            if ($response["status"] == "success") {
+                success_msg("Profile Updated. Please refresh page to see changes.");
+                unset($_SESSION["username"]);
+                set_sess_var("username", $response["username"]);
+                show_flash_messages();
+            } else {
+                error_msg("Error Updating Profile");
+                show_flash_messages();
+            }
         }
     }
-}
-
-?>
-
-
+    ?>
+    <?php include_once(__DIR__ . "/partials/footer.php"); ?>
+</body>
 
 </html>

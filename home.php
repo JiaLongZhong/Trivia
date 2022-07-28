@@ -25,23 +25,44 @@ if (!is_logged_in()) {
                                 <div class="text-white">
                                     <h1 class="mb-3">IT490 Trivia Project</h1>
                                     <?php
-                                    require_once(__DIR__ . "/lib/helpers.php");
                                     echo '<p>Welcome ' . get_user_fullname() . '</p>';
                                     ?>
-                                    <a class="btn btn-outline-light btn-lg m-2" href="create_trivia.php" role="button" rel="nofollow" target="_blank">Create Trivia</a>
                                     <a class="btn btn-outline-light btn-lg m-2" href="game.php" role="button" rel="nofollow" target="_blank">Play Trivia Game</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <form action="logout.php">
-                        <input type="submit" value="Log Out" />
-                    </form>
                 </div>
             </div>
         </div>
-    </div>
+        <di id="games">
+            <?php
+            require_once(__DIR__ . "/rpc_producer.php");
+            $trivia_rpc = new RpcClient();
+            $response = json_decode($trivia_rpc->call(array("email" => get_email()), 'trivia_info_queue'), true);
+            if ($response["status"] == "error") {
+                error_msg("There was an error getting trivia games");
+            } else {
+                set_sess_var("trivia_info", $response["trivia_games_info"]);
+            }
+            $trivia_games = get_trivia_info();
+            ?>
+            <?php foreach ($trivia_games as $trivia_game) : ?>
+                <!-- list games horizontally -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $trivia_game["title"]; ?></h5>
+                                <p class="card-text"><?php echo $trivia_game["description"]; ?></p>
+                                <a href="game.php?id=<?php echo $trivia_game["id"]; ?>" class="btn btn-primary">Play</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
 
+                </div>
+    </div>
     <?php include_once(__DIR__ . "/partials/footer.php"); ?>
 </body>
 
