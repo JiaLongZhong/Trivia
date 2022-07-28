@@ -7,4 +7,5 @@ ssh -i ~/.ssh/id_rsa $1@$2 /home/$1/scripts/base.sh start $3 $1
  ./migrate.sh /home/$USER/Group/IT490-M22-TBD1/lib /home/$1/dropoff $1 $2
  ./migrate.sh /home/$USER/Group/IT490-M22-TBD1/rpc_api_consumer.php /home/$1/dropoff $1 $2
 
-    ssh -i ~/.ssh/id_rsa $1@$2 /home/$1/scripts/base.sh "API" $3 $1
+ssh -i ~/.ssh/id_rsa $1@$2 /home/$1/scripts/base.sh "API" $3 $1
+#ssh -i ~/.ssh/id_rsa $1@$2 /home/$1/scripts/do_Implement.sh dropoff
