@@ -12,9 +12,21 @@
     if (!has_role("trivia_creator")) {
         echo "You do not have permission to access this page";
         die();
+        show_flash_messages();
     }
     ?>
     <h2 class="text-uppercase"><?php echo $_GET["title"]; ?></h2>
+    <!-- Create button to bring up edit form -->
+    <button id="edit-trivia">Edit Name</button>
+    <form id="edit-trivia-form" class="form" method="POST" style="display: none;">
+        <label for="trivia-name">Name</label>
+        <input type="text" id="trivia-name" name="trivia_name" />
+        <br>
+        <label for="description">Description</label>
+        <input type="text" id="trivia-description" name="trivia_description" />
+        <br>
+        <input type="submit" id="trivia_submit" name="edit" value="Edit" />
+    </form>
     <?php
     if (isset($_GET["id"])) {
         $trivia_id = $_GET["id"];
@@ -35,6 +47,39 @@
                 set_sess_var("trivia_info", $response["trivia_games_info"]);
             }
         }
+
+        if (isset($_POST["edit"])) {
+            $trivia_name = $_POST["trivia_name"];
+            $trivia_description = $_POST["trivia_description"];
+            $user_id = get_user_id();
+            $action = "edit";
+            $isValid = true;
+            if (!isset($trivia_name) || !isset($trivia_description)) {
+                $isValid = false;
+            }
+            if ($isValid) {
+                require_once(__DIR__ . "/rpc_producer.php");
+                $trivia_rpc = new RpcClient();
+                $response = json_decode($trivia_rpc->call(
+                    array(
+                        "trivia_id" => $trivia_id,
+                        "trivia_name" => $trivia_name,
+                        "trivia_description" => $trivia_description,
+                        "id" => $user_id,
+                        "action" => $action
+                    ),
+                    'trivia_queue'
+                ), true);
+                if ($response["status"] == "success") {
+                    success_msg("Trivia edited successfully");
+                    set_sess_var("trivia_games", $response["trivia_games"]);
+                    header("Location: create_trivia.php");
+                } else {
+                    error_msg("Error editing trivia");
+                    header("Location: create_trivia.php");
+                }
+            }
+        }
     }
     ?>
 
@@ -49,23 +94,21 @@
             </div>
             <input type="submit" id="question_submit" name="draft" value="Save Draft" />
             <input type="submit" id="question_publish" name="publish" value="Publish" />
+            <input class="btn btn-danger" type="submit" id="question_delete" name="delete" value="Delete Trivia" />
         </form>
     </div>
-    <!-- Create a div to display the current questions and answers of the trivia game -->
-    <div id="trivia-questions">
-        <?php
-        list_trivia_info();
-        ?>
-    </div>
     <?php
-
+    // Function to map questions correctly
     function map_questions($data)
     {
         if (isset($data["draft"])) {
             $action = "draft";
-        } else {
+        } else if (isset($data["publish"])) {
             $action = "publish";
+        } else {
+            $action = "delete";
         }
+
         $regex_question = "/^question(\d+)$/";
         $regex_correct = "/correct$/";
         $regex_incorrect = "/question(\d+)_incorrect(\d+)$/";
@@ -92,16 +135,18 @@
         }
         return $return_array;
     }
+
     //Save the draft of the trivia game
     if (isset($_POST["draft"])) {
         $trivia_questions = map_questions($_POST);
         require_once(__DIR__ . "/rpc_producer.php");
         $trivia_rpc = new RpcClient();
         $response = json_decode($trivia_rpc->call($trivia_questions, 'custom_trivia_queue'), true);
-        if ($response["status"] == "success") {
-            echo "Draft saved successfully";
+        if (isset($response) && $response["status"] == "success") {
+            success_msg("Trivia draft saved successfully");
+            header("Location: create_trivia.php");
         } else {
-            echo "Draft failed to save";
+            error_msg("Error saving trivia draft");
         }
     }
     // Publish the trivia game
@@ -110,14 +155,54 @@
         require_once(__DIR__ . "/rpc_producer.php");
         $trivia_rpc = new RpcClient();
         $response = json_decode($trivia_rpc->call($trivia_questions, 'custom_trivia_queue'), true);
-        if ($response["status"] == "success") {
-            echo "Trivia game published successfully";
+        if (isset($response) && $response["status"] == "success") {
+            success_msg("Trivia published successfully");
+            header("Location: create_trivia.php");
         } else {
-            echo "Trivia game failed to publish";
+            error_msg("Error publishing trivia");
         }
     }
 
+    if (isset($_POST["delete"])) {
+        $trivia_questions = map_questions($_POST);
+        require_once(__DIR__ . "/rpc_producer.php");
+        $trivia_rpc = new RpcClient();
+        $response = json_decode($trivia_rpc->call($trivia_questions, 'custom_trivia_queue'), true);
+        if (isset($response) && $response["status"] == "success") {
+            success_msg("Trivia deleted successfully");
+            header("Location: create_trivia.php");
+        } else {
+            error_msg("Error deleting trivia");
+        }
+    }
     ?>
+    <!-- Create a div to display the current questions and answers of the trivia game -->
+    <div id="trivia-questions">
+        <?php
+        $trivia_info = get_trivia_info();
+        $q_id = null;
+        if (isset($trivia_info)) {
+            $question_counter = 0;
+            foreach ($trivia_info as $game) {
+
+                if ($q_id != $game["question_id"]) {
+                    $q_id = $game["question_id"];
+                    $question_counter++;
+                }
+
+                echo "<h4>" . $question_counter . "</h4>";
+                echo "<h2>" . $game["question"] . "</h2>";
+                echo "<p>" . $game["answer"] . "</p>";
+                if ($game["isCorrect"] == 1) {
+                    echo "<p class='correct'>Correct!</p>";
+                } else {
+                    echo "<p class='incorrect'>Incorrect!</p>";
+                }
+                $q_id = $game["question_id"];
+            }
+        }
+        ?>
+    </div>
     <script src="static/js/addQuestions.js" defer></script>
     <?php include_once(__DIR__ . "/partials/footer.php"); ?>
 

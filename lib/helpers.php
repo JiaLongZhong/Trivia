@@ -8,6 +8,11 @@ function set_sess_var($sess_name, $db_var)
     $_SESSION[$sess_name] = $db_var;
 }
 
+function remove_sess_var($sess_name)
+{
+    unset($_SESSION[$sess_name]);
+}
+
 function get_user_id()
 {
     if (isset($_SESSION["id"])) {
@@ -92,18 +97,6 @@ function get_trivia_games()
 {
     if (isset($_SESSION["trivia_games"])) {
         return $_SESSION["trivia_games"];
-    }
-}
-
-//This function automatically lists all the trivia games that the user has created with buttons that take them to an edit page
-function list_created_games()
-{
-    $trivia_games = get_trivia_games();
-    if (isset($trivia_games)) {
-        foreach ($trivia_games as $game) {
-            //output button with link to edit_trivia.php and trivia id as a get parameter
-            echo "<a href='edit_trivia.php?id=" . $game["id"] . "&" . "title=" . $game["title"] . "'><button class='btn btn-primary my-2'>" . $game["title"] . "</button></a><br>";
-        }
     }
 }
 
