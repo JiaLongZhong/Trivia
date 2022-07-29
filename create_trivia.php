@@ -9,8 +9,9 @@
 <body>
     <?php require_once(__DIR__ . "/partials/nav.php"); ?>
     <?php
-    if (!has_role("trivia_creator")) {
-        echo "You do not have permission to access this page";
+    if (!is_logged_in() || !has_role("trivia_creator")) {
+        error_msg("You do not have permission to access this page");
+        show_flash_messages();
         die();
     }
     show_flash_messages();

@@ -9,7 +9,7 @@
 <body>
 
     <?php require_once(__DIR__ . "/partials/nav.php"); ?>
-
+    <?php show_flash_messages(); ?>
 
     <div class="container">
 
@@ -154,14 +154,14 @@
             $response = json_decode($reg_rpc->call($registration_array, 'reg_queue'), true);
             // echo var_dump($response);
             if ($response["status"] == "success") {
-                echo "Registration Successful";
+                success_msg("Registration Successful");
                 header("Location: login.php");
-            } elseif (
-                $response["status"] == "error"
-            ) {
-                echo "Account already exists. Please log in.";
+            } elseif ($response["status"] == "error") {
+                warning_msg("Account already exists. Please log in.");
+                header("Location: login.php");
             } else {
-                echo "An error occurred during registration. Please try again";
+                error_msg("An error occurred during registration. Please try again");
+                header("Location: register.php");
             }
         }
     }

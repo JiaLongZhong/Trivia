@@ -13,7 +13,8 @@ if (is_logged_in()) {
 
 <body>
     <?php require_once(__DIR__ . "/partials/nav.php"); ?>
-   <div class="row">
+    <?php show_flash_messages(); ?>
+    <div class="row">
         <div class="col-12">
             <div class="card">
                 <div id="intro" class="bg-image shadow-2-strong">
@@ -21,7 +22,8 @@ if (is_logged_in()) {
                         <div class="container d-flex align-items-center justify-content-center text-center h-100">
                             <div class="text-white">
                                 <h1 class="mb-3">IT490 Trivia Project</h1>
-                                <h5 class="mb-4"><p>To be the best, you will have to beat the best!
+                                <h5 class="mb-4">
+                                    <p>To be the best, you will have to beat the best!
                                         Join the competitive environment of quizzes where players get to challenge the world leaderboard. Show off your glory by showcasing your achievement through hard-earned badges. Not in a competitive mood. No problem, users can create trivia and play with their family and friends. Join our wonderful Trivia community for the sake of glory and entertainment by logging in with your email. New to the platform, no problem, sign up today to join the community:</p>
                                 </h5>
                                 <a class="btn btn-outline-light btn-lg m-2" href="register.php" role="button" rel="nofollow" target="_blank">Sign Up</a>

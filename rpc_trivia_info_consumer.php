@@ -14,18 +14,37 @@ $channel->queue_declare('trivia_info_queue', false, false, false, false);
 
 function get_trivia($n)
 {
-    $trivia_id = $n["trivia_id"];
-    echo "Received trivia id: " . $trivia_id . "\n";
-    $db = getDB();
-    $query = "SELECT * FROM Trivia JOIN Questions ON Trivia.id = Questions.trivia_id JOIN Answers ON Questions.id = Answers.question_id WHERE Trivia.id = :id";
-    $stmt = $db->prepare($query);
-    $stmt->execute(array(":id" => $trivia_id));
-    $trivia_games_info = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $response = array(
-        "status" => "success",
-        "message" => "Trivia retrieved successfully",
-        "trivia_games_info" => $trivia_games_info
-    );
+    $trivia_id = null;
+    $log_file_name = "trivia_info.log";
+    write_log("Trivia Info Requested by: " . $n['email'], $log_file_name);
+    if (isset($n["trivia_id"])) {
+        $trivia_id = $n["trivia_id"];
+        echo "Received trivia id: " . $trivia_id . "\n";
+        $db = getDB();
+        $query = "SELECT * FROM Trivia JOIN Questions ON Trivia.id = Questions.trivia_id JOIN Answers ON Questions.id = Answers.question_id WHERE Trivia.id = :id";
+        $stmt = $db->prepare($query);
+        $stmt->execute(array(":id" => $trivia_id));
+        $trivia_games_info = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $response = array(
+            "status" => "success",
+            "message" => "Trivia retrieved successfully",
+            "trivia_games_info" => $trivia_games_info
+        );
+        write_log("Trivia Info Sent to: " . $n['email'], $log_file_name);
+    } else {
+        $db = getDB();
+        $query = "SELECT * FROM Trivia WHERE Trivia.visibility = 2";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        $trivia_games_info = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $response = array(
+            "status" => "success",
+            "message" => "Trivia retrieved successfully",
+            "trivia_games_info" => $trivia_games_info
+        );
+        write_log("Trivia Info Sent to: " . $n['email'], $log_file_name);
+    }
+
 
     return $response;
 }
