@@ -17,7 +17,7 @@ You&#39;ll want to change the file name to include your ucid so it doesn&#39;t c
 </table></td></tr>
 <table><tr><td> <em>Deliverable 2: </em> Discuss </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="http://via.placeholder.com/400x120/009955/fff?text=Complete"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Briefly talk about what you contributed to the above issues/tracking items</td></tr>
-<tr><td> <em>Response:</em> <p>This week I added the point system and timer function to our trivia<br>game. I also wrote functions that validate friend, add/remove friend request, and checking<br>if user are already friend. Next week: I will create the friend page,<br>and get the friend system to function with our website.<br></p><br></td></tr>
+<tr><td> <em>Response:</em> <p>This week I added the point system and timer function to our trivia<br>game. I also started writing functions that validate friend, add/remove friend request, and checking<br>if user are already friend. Next week: I will create the friend page,<br>and get the friend system to function with our website.<br></p><br></td></tr>
 <tr><td> <em>Sub-Task 2: </em> Any problems this week with your tasks or any group members? If so, how did you resolve them or how do you plan to resolve them.</td></tr>
 <tr><td> <em>Response:</em> <p>&quot;No issue&quot;<div>Our group will have an upcoming meeting to split the remaining&nbsp; works(trivia<br>game feature (friend system, dashboard page, and added multiple player to one trivia)<br>to complete our project.<br><div><br></div></div><br></p><br></td></tr>
 </table></td></tr>
