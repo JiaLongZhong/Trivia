@@ -54,6 +54,7 @@
                 $response = json_decode($login_rpc->call($_POST, 'login_queue'), true);
                 if ($response["status"] == "error") {
                     error_msg("Login failed. Please try again.");
+                    header("Location: login.php");
                 } else {
                     success_msg("Login successful");
                     set_sess_var("fname", $response["fname"]);

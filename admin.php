@@ -8,7 +8,7 @@
 
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
 <?php
-if (!is_logged_in() || !has_role("Admin")) {
+if (!is_logged_in() || !has_role("admin")) {
     error_msg("You are not logged in or you do not have permission to access this page");
     show_flash_messages();
     die();
