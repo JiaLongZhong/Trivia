@@ -24,14 +24,16 @@ case $1 in
 	"APP")
         sudo apt update
         sudo apt upgrade
-        sudo apt install php-json php-curl composer php-mbstring php-zip php-gd php php-bcmath composer
+        #sudo apt install php-json php-curl composer php-mbstring php-zip php-gd php php-bcmath composer
 		#[ sudo systemctl status apache2 | grep "Status: install" ] && { sudo apt install apache2; } 
         if service_exists apache2; then
             echo "apache2 is installed"
         else
+            sudo apt install php-json php-curl composer php-mbstring php-zip php-gd php php-bcmath composer
             sudo apt install apache2
             sudo systemctl enable apache2
             sudo systemctl start apache2
+            
         fi
         sudo /etc/init.d/apache2 restart
         echo "setup apache to serve the app"
