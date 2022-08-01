@@ -25,10 +25,10 @@
             <h1> Upload/Insert an Image </h1>
 
             <form action="" method="POST" enctype="multipart/form-data">
-                <label> Choose a Profile Pic: </label><br>
+                <label> Choose a Profile Picture: </label><br>
                 <input type="file" name="image" id="image" /><br>
 
-                <input type="submit" name="upload" value="Upload Image/Data" /><br>
+                <input type="submit" name="upload" value="Upload Image" /><br>
 
             </form>
         </center>
