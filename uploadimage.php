@@ -45,14 +45,13 @@ if (!is_logged_in()) {
     die(header("Location: index.php"));
 }
 
-$connection = mysqli_connect("localhost", "root", "");
+$connection = mysqli_connect("localhost", "", "");
 $db = mysqli_select_db($connection, 'trivia_app');
 
 if (isset($_POST['upload'])) {
     $file = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
-    $username = $_POST['username'];
 
-    $query = "INSERT  INTO 'empimage'('image') VALUES ('$file') '";
+    $query = "INSERT  INTO 'ProfilePic'('image') VALUES ('$file')";
     $query_run = mysqli_query($connection, $query);
 
     if ($query_run) {
