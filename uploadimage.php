@@ -1,13 +1,14 @@
 <html>
-    <head>
+
+<head>
 
     <title><?php echo ucfirst(substr(basename(__FILE__), 0, -4)); ?></title>
     <?php require_once(__DIR__ . "/partials/header.php"); ?>
 
-        <title> Upload Profile Picture </title>
+    <title> Upload Profile Picture </title>
 
-        <style>
-        input{
+    <style>
+        input {
             width: 50%;
             height: 5%;
             border: 1px;
@@ -17,22 +18,24 @@
             box-shadow: 1px 1px 2px 1px grey;
             font-weight: bold;
         }
-        </style>
-        
+    </style>
+
     </header>
-    <body>
-        <center>
-            <h1> Upload/Insert an Image </h1>
 
-            <form action="" method="POST" enctype="multipart/form-data">
-                <label> Choose a Profile Picture: </label><br>
-                <input type="file" name="image" id="image" /><br>
+<body>
+    <center>
+        <h1> Upload/Insert an Image </h1>
 
-                <input type="submit" name="upload" value="Upload Image" /><br>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <label> Choose a Profile Picture: </label><br>
+            <input type="file" name="image" id="image" /><br>
 
-            </form>
-        </center>
+            <input type="submit" name="upload" value="Upload Image" /><br>
+
+        </form>
+    </center>
 </body>
+
 </html>
 
 <?php
@@ -45,19 +48,15 @@ if (!is_logged_in()) {
 $connection = mysqli_connect("localhost", "", "");
 $db = mysqli_select_db($connection, 'trivia_app');
 
-if(isset($_POST['upload']))
-{
+if (isset($_POST['upload'])) {
     $file = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
 
     $query = "INSERT  INTO 'ProfilePic'('image') VALUES ('$file')";
     $query_run = mysqli_query($connection, $query);
 
-    if($query_run)
-    {
+    if ($query_run) {
         echo '<script type="text/javascript"> alert("Image Profile Uploaded")</script>';
-    }
-    else
-    {
+    } else {
         echo '<script type="text/javascript"> alert("Image Profile Not Uploaded")</script>';
     }
 }
