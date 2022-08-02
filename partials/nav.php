@@ -9,12 +9,24 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+            <?php if (is_logged_in()) : ?>
+                <!-- add a search box in the navigation -->
+                <li class="nav-item">
+                    <form class="form-inline my-2 my-lg-0" action="list_users.php" method="post">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query" id="query" autocomplete="off">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </li>
+            <?php endif; ?>
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="home.php">Home</a>
             </li>
             <?php if (is_logged_in()) : ?>
                 <li class="nav-item">
                     <a class="nav-link" href="profile.php">User Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="friend_request.php">Friend Requests</a>
                 </li>
                 <?php if (has_role("trivia_creator")) : ?>
                     <li class="nav-item">
