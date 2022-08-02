@@ -9,7 +9,7 @@
         <style>
         input{
             width: 50%;
-            height= 5%;
+            height: 5%;
             border: 1px;
             border-radius: 05px;
             padding: 8px 15px 8px 15px;
@@ -42,18 +42,17 @@ if (!is_logged_in()) {
     die(header("Location: index.php"));
 }
 
-$connection = mysqli_connect("localhost", "root", "");
+$connection = mysqli_connect("localhost", "", "");
 $db = mysqli_select_db($connection, 'trivia_app');
 
 if(isset($_POST['upload']))
 {
     $file = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
-    $username = $_POST['username'];
 
-    $query = "INSERT  INTO 'empimage'('image') VALUES ('$file') '";
+    $query = "INSERT  INTO 'ProfilePic'('image') VALUES ('$file')";
     $query_run = mysqli_query($connection, $query);
 
-    if(query_run)
+    if($query_run)
     {
         echo '<script type="text/javascript"> alert("Image Profile Uploaded")</script>';
     }
