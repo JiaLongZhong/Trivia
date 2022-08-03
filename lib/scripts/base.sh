@@ -43,7 +43,7 @@ case $1 in
         sudo systemctl restart rsyslog
         #setup apache to serve the app from the live folder
         [ -e /home/$USER/dropoff/lib ] && { echo "lib found"; } || { echo "lib not found, creating it now"; sudo mkdir -p /home/$USER/dropoff/lib; }
-        [ -e /home/$USER/dropoff/lib/configrmq.ini ] && { echo "mqconfig exists"; } || { echo "configrmq.ini not found, creating it now"; sudo touch /home/$USER/dropoff/lib/configrmq.ini; sudo chmod 666 /home/$USER/dropoff/lib/configrmq.ini; ./home/$USER/scripts/secretConfigs.sh $2 "APP"; sudo nano /home/$USER/dropoff/lib/configrmq.ini; sudo cp -f /home/$USER/dropoff/lib/configrmq.ini /home/$USER/scripts/configrmq.ini.bak; }
+        [ -e /home/$USER/dropoff/lib/configrmq.ini ] && { echo "mqconfig exists"; sudo nano /home/$USER/dropoff/lib/configrmq.ini; } || { echo "configrmq.ini not found, creating it now"; sudo touch /home/$USER/dropoff/lib/configrmq.ini; sudo chmod 666 /home/$USER/dropoff/lib/configrmq.ini; ./home/$USER/scripts/secretConfigs.sh $2 "APP"; sudo nano /home/$USER/dropoff/lib/configrmq.ini; sudo cp -f /home/$USER/dropoff/lib/configrmq.ini /home/$USER/scripts/configrmq.ini.bak; }
         ;;
 
 	"MQ")
@@ -126,7 +126,12 @@ case $1 in
     "API")
         sudo apt upgrade
         sudo apt update
-        sudo apt install php-json php-curl composer php-mbstring php-zip php-gd
+        if service_exists composer; then
+            echo "composer is already installed"
+        else
+            sudo apt install php-json php-curl composer php-mbstring php-zip php-gd -Y 
+        fi
+        
         echo "pulls API files and runs ~init-api.php"
         #check and install rsyslog with the correct config
         [ ! -e /etc/rsyslog.conf ] && { sudo apt install rsyslog; sudo chmod 666 /etc/rsyslog.conf; sudo echo "*.* @$2:514" >> /etc/rsyslog.conf; }

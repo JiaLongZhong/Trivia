@@ -7,7 +7,7 @@
 if [ $# -ne 5 ]; then
     if [ $# -eq 4 ]; then
         echo "No ssh key specified using default"
-        ssh_key=~/.ssh/id_rsa
+        ssh_key=~/.ssh/id_ed25519
     else { echo "Usage: push.sh source user host dest ssh_key(blank for default)"; exit 1; }
     fi
     else

@@ -5,7 +5,9 @@
 ./migrate.sh /home/$USER/Group/IT490-M22-TBD1/sql /home/$1/dropoff/sql $1 $2
 ./migrate.sh /home/$USER/Group/IT490-M22-TBD1/services /home/$1/dropoff/services $1 $2
 ./migrate.sh /home/$USER/Group/IT490-M22-TBD1/vendor /home/$1/dropoff/vendor $1 $2
-./migrate.sh /home/$USER/Group/IT490-M22-TBD1/lib /home/$1/dropoff/lib $1 $2*/
+./migrate.sh /home/$USER/Group/IT490-M22-TBD1/lib /home/$1/dropoff/lib $1 $2
+
+./migrate.sh /home/$USER/Group/IT490-M22-TBD1/composer.json /home/$1/dropoff $1 $2
 for file in /home/$USER/Group/IT490-M22-TBD1/rpc_*.php; do
 	./migrate.sh $file /home/$1/dropoff $1 $2
 done
