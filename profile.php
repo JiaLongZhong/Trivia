@@ -10,7 +10,7 @@
 
 <body>
     <div class="card">
-        <href ="uploadimage.php" img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*" alt="User Profile" style="width:200px; height: 200px; border-radius:50%"></div>
+        <div class="center"> <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*" alt="User Profile" style="width:200px; height: 200px; border-radius:50%"></div>
         <div class="flex-grow-1 ms-3">
             <div id="profile-form">
                 <h4 class="mb-1">Name:<?php echo get_user_fullname(); ?></h4>
@@ -29,6 +29,7 @@
                 <input type="password" id="new-password" name="new-password" placeholder="New Password" />
                 <label for="confirm-password">Confirm Password</label>
                 <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" />
+                <a href="uploadimages.php"> <input type="button" value="Update Profile Picture" /></a>
                 <input type="button" id="cancel" name="cancel" value="Cancel Update" />
                 <input type="submit" id="submit" name="submit" value="Confirm Update" />
             </form>
