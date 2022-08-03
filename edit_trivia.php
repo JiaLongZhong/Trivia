@@ -185,23 +185,28 @@
         $trivia_info = get_trivia_info();
         $q_id = null;
         if (isset($trivia_info)) {
-            $question_counter = 0;
-            foreach ($trivia_info as $game) {
-
-                if ($q_id != $game["question_id"]) {
-                    $q_id = $game["question_id"];
-                    $question_counter++;
+            $q_id = null;
+            $q_counter = 0;
+            $q_question = null;
+            $q_number = 0;
+            $json_array = array();
+            // loop through the trivia info
+            foreach ($trivia_info as $question) {
+                if ($question["question_id"] != $q_id && $question["question"] != $q_question) {
+                    $q_id = $question["question_id"];
+                    $q_question = $question["question"];
+                    $q_counter++;
+                    echo "<h3>Question " . $q_counter . ": " . $q_question . "</h3>";
                 }
 
-                echo "<h4>" . $question_counter . "</h4>";
-                echo "<h2>" . $game["question"] . "</h2>";
-                echo "<p>" . $game["answer"] . "</p>";
-                if ($game["isCorrect"] == 1) {
-                    echo "<p class='correct'>Correct!</p>";
+                if ($q_counter != $q_number) {
+                    $q_number = $q_counter;
+
+                    echo "<p>Correct Answer: " . $question["answer"] . "</p>";
                 } else {
-                    echo "<p class='incorrect'>Incorrect!</p>";
+
+                    echo "<p>Incorrect Answer: " . $question["answer"] . "</p>";
                 }
-                $q_id = $game["question_id"];
             }
         }
         ?>
