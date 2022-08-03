@@ -49,3 +49,25 @@ input[type=submit] {
     margin-top: 6px;
     margin-bottom: 16px;
 }
+.quiz_container{
+    background-color:white;
+    text-align: center;
+}
+.card-text{
+    font-family: "Playfair";
+    color: black;
+    font-size: 24px;
+}
+
+.quiz_card{
+    display:inline-flex;
+    position: relative;
+    text-align:center;
+   
+}
+
+div.quiz_card-body{
+     border: 10px solid blue;
+     width: 240px;
+     height:240px;
+}
