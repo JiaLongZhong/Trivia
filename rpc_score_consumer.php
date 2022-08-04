@@ -15,7 +15,7 @@ $channel->queue_declare('score_queue', false, false, false, false);
 
 function ScoreSubmit($n)
 {
-	$log_file_name = "question_consumer.log";
+	$log_file_name = "score_consumer.log";
 	write_log("score from: " . $n['user'], $log_file_name);
 	$params = array(
 		":score" => $n["score"],
