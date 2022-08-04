@@ -50,7 +50,7 @@
                                 echo "<tr>";
                                 echo "<td>" . $user["fname"] . "</td>";
                                 echo "<td>" . $user["score"] . "</td>";
-                                echo "<td>" . $user["trivia_name"] . "</td>";
+                                echo "<td>" . $user["title"] . "</td>";
                                 echo "</tr>";
                             }
                         }
