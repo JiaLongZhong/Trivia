@@ -36,7 +36,7 @@ function LeaderboardSubmit($n)
 	if ($e[0] == "00000") {
 		$response = array(
 			"status" => "success",
-			"message" => "Record added successfully"
+			"leaderboard" => $r
 		);
 		write_log("leaderboard sent successfully: " . $n["user"], $log_file_name);
 		
@@ -44,7 +44,6 @@ function LeaderboardSubmit($n)
 		$response = array(
 			"status" => "error",
 			"message" => "user already exists for that score"
-            #TODO add a check to see if the score is the same as the previous one and if so, don't add it again
 		);
 		write_log("leaderboard sent error: " . $e[2], $log_file_name);
 	} else {
