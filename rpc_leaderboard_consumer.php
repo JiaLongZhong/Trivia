@@ -17,26 +17,47 @@ function LeaderboardSubmit($n)
 {
 	$log_file_name = "leaderboard_consumer.log";
 	write_log("leaderboard Request from: " . $n['user'], $log_file_name);
+	
+	$db = getDB();
+	$query = "SELECT
+    u.fname,
+    s.score,
+    s.user_id
+FROM
+    Score s
+JOIN Users u ON
+    s.user_id = u.id
+WHERE
+    s.user_id = :user OR s.user_id =(
+    SELECT
+        sender_id
+    FROM
+        Friends
+    WHERE
+        receiver_id = :user
+) OR s.user_id =(
+    SELECT
+        receiver_id
+    FROM
+        Friends
+    WHERE
+        sender_id = :user
+)
+ORDER BY
+    s.score
+DESC
+    ";
+	$stmt = $db->prepare($query);
 	$params = array(
 		'user' => $n['user']
 	);
-	$db = getDB();
-	$query = "SELECT  u.fname, s.score, s.user_id FROM score s 
-	JOIN Users u
-	WHERE s.user_id = ANY 
-	(SELECT sender_id FROM friend_request WHERE receiver_id = :user_id
-	UNION
-	SELECT receiver_id FROM friend_request WHERE sender_id = :user_id)
-	SORT BY s.score DESC 
-	LIMIT 20";
-	$stmt = $db->prepare($query);
-
 	$r = $stmt->execute($params);
 	$e = $stmt->errorInfo();
+	$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	if ($e[0] == "00000") {
 		$response = array(
 			"status" => "success",
-			"leaderboard" => $r
+			"leaderboard" => $result
 		);
 		write_log("leaderboard sent successfully: " . $n["user"], $log_file_name);
 		
