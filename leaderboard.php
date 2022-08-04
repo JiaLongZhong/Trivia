@@ -36,6 +36,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Score</th>
+                            <th>Trivia title</th>
                         </tr>
                     </thead>
                     <tbody>
