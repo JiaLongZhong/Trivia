@@ -28,7 +28,10 @@
         </div> 
     </div>
 
-    <table class="table table-striped">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -52,6 +55,10 @@
                         }
                         ?>
                     </tbody>
+                </table>
+            </div>
+        </div>
+    
 
     <?php include_once(__DIR__ . "/partials/footer.php"); ?>
 </body>
