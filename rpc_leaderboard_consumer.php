@@ -18,6 +18,7 @@ function LeaderboardSubmit($n)
 	$log_file_name = "leaderboard_consumer.log";
 	write_log("leaderboard Request from: " . $n['user'], $log_file_name);
 	$params = array(
+		'user' => $n['user']
 	);
 	$db = getDB();
 	$query = "SELECT  u.fname, s.score, s.user_id, 
@@ -30,7 +31,8 @@ function LeaderboardSubmit($n)
 	SORT BY s.score DESC 
 	LIMIT 20";
 	$stmt = $db->prepare($query);
-	$r = $stmt->execute();
+
+	$r = $stmt->execute($params);
 	$e = $stmt->errorInfo();
 	if ($e[0] == "00000") {
 		$response = array(
