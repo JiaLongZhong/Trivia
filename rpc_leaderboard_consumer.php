@@ -75,7 +75,7 @@ $callback = function ($req) {
 };
 
 $channel->basic_qos(null, 1, null);
-$channel->basic_consume('score_queue', '', false, false, false, false, $callback);
+$channel->basic_consume('leaderboard_queue', '', false, false, false, false, $callback);
 while (count($channel->callbacks) || $channel->is_consuming() || $channel->is_open()) {
 	$channel->wait();
 }
