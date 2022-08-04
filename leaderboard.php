@@ -12,7 +12,7 @@
     if (!is_logged_in()) {
         error_msg("You do not have permission to access this page");
         show_flash_messages();
-        die();
+        die(header("Location: index.php"));
     }
     ?>
     <?php
