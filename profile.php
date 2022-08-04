@@ -29,7 +29,7 @@
                 <input type="password" id="new-password" name="new-password" placeholder="New Password" />
                 <label for="confirm-password">Confirm Password</label>
                 <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" />
-                <a href="uploadimages.php"> <input type="button" value="Update Profile Picture" /></a>
+                <a href="uploadimage.php"> <input type="button" value="Update Profile Picture" /></a>
                 <input type="button" id="cancel" name="cancel" value="Cancel Update" />
                 <input type="submit" id="submit" name="submit" value="Confirm Update" />
             </form>
