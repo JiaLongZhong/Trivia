@@ -23,9 +23,12 @@ function LeaderboardSubmit($n)
 	$query = "SELECT
     u.fname,
     s.score,
-    s.user_id
+    s.user_id,
+    t.title
 FROM
     Score s
+JOIN Trivia t ON
+    t.id = s.trivia_id
 JOIN Users u ON
     s.user_id = u.id
 WHERE
@@ -47,6 +50,7 @@ WHERE
 ORDER BY
     s.score
 DESC
+    
     ";
 	$stmt = $db->prepare($query);
 	$params = array(
