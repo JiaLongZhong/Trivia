@@ -21,8 +21,7 @@ function LeaderboardSubmit($n)
 		'user' => $n['user']
 	);
 	$db = getDB();
-	$query = "SELECT  u.fname, s.score, s.user_id, 
-	FROM score s 
+	$query = "SELECT  u.fname, s.score, s.user_id FROM score s 
 	JOIN Users u
 	WHERE s.user_id = ANY 
 	(SELECT sender_id FROM friend_request WHERE receiver_id = :user_id
