@@ -56,7 +56,7 @@ function LeaderboardSubmit($n)
 	return $response;
 }
 
-echo " [x] Awaiting RPC requests for score\n";
+echo " [x] Awaiting RPC requests for leaderboard\n";
 $callback = function ($req) {
 	$n = $req->body;
 	$consumed_data = json_decode($n, true);
