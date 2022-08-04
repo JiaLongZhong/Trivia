@@ -58,7 +58,6 @@
                 </table>
             </div>
         </div>
-    
 
     <?php include_once(__DIR__ . "/partials/footer.php"); ?>
 </body>
