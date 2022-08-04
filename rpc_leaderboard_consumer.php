@@ -16,6 +16,7 @@ $channel->queue_declare('leaderboard_queue', false, false, false, false);
 function LeaderboardSubmit($n)
 {
 	$log_file_name = "leaderboard_consumer.log";
+	echo "pulling from leaderboard_queue\n";
 	write_log("leaderboard Request from: " . $n['user'], $log_file_name);
 	
 	$db = getDB();
