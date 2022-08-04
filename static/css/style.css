@@ -18,6 +18,10 @@ input#question_delete {
     background: red;
 }
 
+input.friend_reject {
+    background: red;
+}
+
 /* Style password broder red if invaild */
 .pinvalid
 {

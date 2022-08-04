@@ -56,20 +56,81 @@
                     <tbody>
                         <?php if (isset($results) && count($results) > 0) : ?>
                             <?php foreach ($results as $result) : ?>
-                                <tr>
-                                    <td><?php echo $result["username"]; ?></td>
-                                    <td><button class="btn btn-success" onclick="acceptFriend(<?php echo $result["user_id"]; ?>)">Accept</button></td>
-                                    <td><button class="btn btn-danger" onclick="declineFriend(<?php echo $result["user_id"]; ?>)">Decline</button></td>
-                                </tr>
+                                <?php if ($result["status"] == 0) : ?>
+                                    <tr>
+                                        <td><?php echo $result["username"]; ?></td>
+                                        <form method="post">
+                                            <input type="hidden" name="friend_id" value="<?php echo $result["sender_id"]; ?>">
+                                            <td><input class="btn btn-success" type="submit" value="Accept" name="accept" /></td>
+                                            <td><input class="btn btn-danger friend_reject" type="submit" value="Decline" name="decline" /></td>
+                                        </form>
+                                    </tr>
+                                <?php endif; ?>
+                                <?php if ($result["status"] == 1) : ?>
+                                    <tr>
+                                        <td><?php echo $result["username"]; ?></td>
+                                        <td>Accepted</td>
+                                        <td></td>
+                                    </tr>
+                                <?php endif; ?>
+                                <?php if ($result["status"] == 2) : ?>
+                                    <tr>
+                                        <td><?php echo $result["username"]; ?></td>
+                                        <td></td>
+                                        <td>Declined</td>
+                                    </tr>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </tbody>
                 </table>
             </div>
         </div>
+    </div>
+    <?php
+    if (isset($_POST["accept"])) {
+        $friend_rpc = new RpcClient();
+        $response = json_decode($friend_rpc->call(
+            array(
+                "user_id" => get_user_id(),
+                "friend_id" => $_POST["friend_id"],
+                "action" => "1"
+            ),
+            'friend_queue'
+        ), true);
+        if ($response["status"] == "success") {
+            success_msg("Friend request accepted");
+            show_flash_messages();
+        } else {
+            error_msg("Error accepting friend request");
+            show_flash_messages();
+        }
+    } else if (isset($_POST["decline"])) {
+        $friend_rpc = new RpcClient();
+        $response = json_decode(
+            $friend_rpc->call(
+                array(
+                    "user_id" => get_user_id(),
+                    "friend_id" => $_POST["friend_id"],
+                    "action" => "2"
+                ),
+                'friend_queue'
+            ),
+            true
+        );
+        if ($response["status"] == "success") {
+            success_msg("Friend request declined");
+            show_flash_messages();
+        } else {
+            error_msg("Error declining friend request");
+            show_flash_messages();
+        }
+    }
+
+    ?>
 
 
-        <?php include_once(__DIR__ . "/partials/footer.php"); ?>
+    <?php include_once(__DIR__ . "/partials/footer.php"); ?>
 </body>
 
 </html>

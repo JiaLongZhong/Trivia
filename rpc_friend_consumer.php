@@ -20,7 +20,7 @@ function processFriendInfo($n)
     if (isset($n["query"])) {
         $friend_name = $n["query"];
         $db = getDB();
-        $query = "SELECT id, username FROM Users WHERE username LIKE :friend_name AND id != :user_id AND is_active = 1";
+        $query = "SELECT Users.id, Users.username FROM Users WHERE username LIKE :friend_name AND id != :user_id AND is_active = 1";
         $stmt = $db->prepare($query);
         $params = array(":friend_name" => "%$friend_name%", ":user_id" => $n["user_id"]);
         $r = $stmt->execute($params);
@@ -42,7 +42,8 @@ function processFriendInfo($n)
             write_log("processFriendInfo success", $log_file_name);
         }
         return $response;
-    } else if (isset($n["friend_id"])) {
+    }
+    if (isset($n["friend_id"]) && !isset($n["action"])) {
         $friend_id = $n["friend_id"];
         $db = getDB();
         $query = "INSERT INTO Friends (sender_id, receiver_id) VALUES (:user_id, :friend_id)";
@@ -65,10 +66,11 @@ function processFriendInfo($n)
             write_log("processFriendInfo success", $log_file_name);
         }
         return $response;
-    } else if (isset($n["user_id"]) && !isset($n["query"]) && !isset($n["friend_id"])) {
+    }
+    if (isset($n["user_id"]) && !isset($n["query"]) && !isset($n["friend_id"])) {
         $user_id = $n["user_id"];
         $db = getDB();
-        $query = "SELECT Users.username, Friends.id, Friends.sender_id, Friends.receiver_id, Friends.status FROM Friends JOIN Users ON Friends.sender_id = Users.id WHERE Friends.receiver_id = :user_id AND Friends.status = 0";
+        $query = "SELECT Users.username, Friends.id, Friends.sender_id, Friends.receiver_id, Friends.status FROM Friends JOIN Users ON Friends.sender_id = Users.id WHERE Friends.receiver_id = :user_id";
         $stmt = $db->prepare($query);
         $params = array(":user_id" => $user_id);
         $r = $stmt->execute($params);
@@ -88,6 +90,48 @@ function processFriendInfo($n)
                 "result" => $result
             );
             write_log("processFriendInfo success", $log_file_name);
+        }
+        return $response;
+    }
+    if (isset($n["user_id"]) && isset($n["friend_id"]) && isset($n["action"])) {
+        $user_id = $n["user_id"];
+        $friend_id = $n["friend_id"];
+        $action = $n["action"];
+        write_log("processFriendInfo action: " . $action, $log_file_name);
+
+
+        $db = getDB();
+        $query = "UPDATE Friends SET status = :action WHERE sender_id = :friend_id AND receiver_id = :user_id";
+        $stmt = $db->prepare($query);
+        $params = array(":user_id" => $user_id, ":friend_id" => $friend_id, ":action" => $action);
+        $r = $stmt->execute($params);
+        $e = $stmt->errorInfo();
+        $response = null;
+        if ($e[0] != "00000") {
+            $response = array(
+                "status" => "error",
+                "message" => $e[2]
+            );
+            write_log("processFriendInfo error: " . $e[2], $log_file_name);
+        } else {
+            $query = "INSERT INTO Friends (sender_id, receiver_id, status) VALUES (:friend_id, :user_id, :action)";
+            $stmt = $db->prepare($query);
+            $params = array(":user_id" => $friend_id, ":friend_id" => $user_id, ":action" => $action);
+            $r = $stmt->execute($params);
+            $e = $stmt->errorInfo();
+            if ($e[0] != "00000") {
+                $response = array(
+                    "status" => "error",
+                    "message" => $e[2]
+                );
+                write_log("processFriendInfo error: " . $e[2], $log_file_name);
+            } else {
+                $response = array(
+                    "status" => "success",
+                    "message" => "Friend request " . $action
+                );
+                write_log("processFriendInfo success", $log_file_name);
+            }
         }
         return $response;
     }
