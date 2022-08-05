@@ -4,19 +4,26 @@
 <head>
     <title><?php echo ucfirst(substr(basename(__FILE__), 0, -4)); ?></title>
     <?php require_once(__DIR__ . "/partials/header.php"); ?>
+    <style>
+        .mb-1{
+            font-family: "Playfair";
+            font-size: 16px;
+            line-height: 1.3;
+        }   
+    </style>
 </head>
 <script src="/static/js/updateProfile.js"></script>
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
 
 <body>
     <div class="card">
-        <div class="center"> <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*" alt="User Profile" style="width:200px; height: 200px; border-radius:50%"></div>
+        <div class="center"> <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*" alt="User Profile" style="width:300px; height: 300px; border-radius:50%"></div>
         <div class="flex-grow-1 ms-3">
             <div id="profile-form">
-                <h4 class="mb-1">Name:<?php echo get_user_fullname(); ?></h4>
-                <h4 class="mb-1">Email:<?php echo get_email(); ?></h4>
-                <h4 class="mb-1">Username:<?php echo get_username(); ?></h4>
-                <h4 class="mb-1">Age:<?php echo get_age(); ?></h4>
+                <h4 class="mb-1">Name: <?php echo get_user_fullname(); ?></h4>
+                <h4 class="mb-1">Email: <?php echo get_email(); ?></h4>
+                <h4 class="mb-1">Username: <?php echo get_username(); ?></h4>
+                <h4 class="mb-1">Age: <?php echo get_age(); ?></h4>
                 <input type="button" id="edit" name="edit" value="Update Profile" />
             </div>
             <form id="profile-confirm-form" method="post" style="display: none;">
