@@ -53,22 +53,19 @@ input[type=submit] {
 .quiz_card{
     background-color: lightblue;
     color: black;
-    border: 5px solid black;
-    margin: 20px;
-    padding: 20px;
     font-family: "Playfair";
 }
 
-.card-text{
-    font-size: 12px
-}
-
 .btn btn-primary{
-    position: relative;
+    position: absolute;
     bottom: 20px;
-    right: 20px;
 }
 
 .card-title{
-    font-size: 20px 
+    font-size: 20px; 
 }
+
+.card-text{
+    font-size: 18px;
+}
+
