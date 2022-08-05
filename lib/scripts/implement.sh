@@ -11,12 +11,12 @@ if [ -d $source ]; then
         echo "Directory: $source"
 		base=$(basename $source)
 		echo $destination/$base
-        [ -e $destination/$base ] && { echo "DIR: $destination/$base exists"; sudo cp -arv $destination/$base ./backup/$base.$timestamp; echo "backuped"; sudo cp -avr $source $destination; sudo rm -r $source; echo "moved"; } || { echo "DIR: $destination/$base does not exist"; sudo cp -avr $source $destination; sudo rm $source; echo "moved"; }
+        [ -e $destination/$base ] && { echo "DIR: $destination/$base exists"; sudo cp -arv $destination/$base ~/backup/$base.$timestamp; echo "backuped"; sudo cp -avr $source $destination; sudo rm -r $source; echo "moved"; } || { echo "DIR: $destination/$base does not exist"; sudo cp -avr $source $destination; sudo rm $source; echo "moved"; }
 		#[ -e $destination/$base ] || { echo "DIR: $destination/$base does not exist"; sudo mv $source $destination/$base; }
     else 
         echo "File: $source" 
 		base=$(basename $source)
-		[ -e $destination/$base ] && { echo "File: $destination/$base exists"; sudo cp -r -b $destination/$base ./backup/$base.$timestamp; sudo cp -avr $source $destination/$base; sudo rm -f $source; }  || { sudo mv $source $destination; }
+		[ -e $destination/$base ] && { echo "File: $destination/$base exists"; sudo cp -fbv $destination/$base ~/backup/$base.$timestamp; sudo cp -avr $source $destination/$base; sudo rm -f $source; }  || { sudo mv $source $destination; }
     fi
 exit 0
 
