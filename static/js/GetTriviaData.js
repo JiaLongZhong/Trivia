@@ -25,9 +25,9 @@ $(document).ready(function () {
                 const _playAgainBtn = document.getElementById('play-again');
                 const _result = document.getElementById('result');
 
-                let totalQuestion = Object.keys(data).length, questionNum = 1, totalScore = 0, time = 60, newData = data[questionNum].question,
-                    options1 = data[questionNum].answers[0], options2 = data[questionNum].answers[1], options3 = data[questionNum].answers[2], options4 = data[questionNum].answers.correct;
+                let totalQuestion = Object.keys(data).length, questionNum = 1, time = 60;
                 let correctAnswer = "", point = 1000, mutiplers = 1, rapidpoint = 0;
+                var totalScore =0;
                 //_questionNum.textContent = questionNum;
                 //_totalQuestion.textContent = totalQuestion;
                 //_totalScore.textContent = totalScore;
@@ -41,10 +41,12 @@ $(document).ready(function () {
                 }
 
                 function showQuestion(data) {
+                    var newData = data[questionNum].question
                     console.log(questionNum);
                     correctAnswer = data[questionNum].answers.correct;
-                    console.log(data[questionNum].answers.correct);
+                    //console.log(data[questionNum].answers.correct);
                     var options = []
+                    var options1 = data[questionNum].answers[0], options2 = data[questionNum].answers[1], options3 = data[questionNum].answers[2], options4 = data[questionNum].answers.correct;
                     options.push(options1, options2, options3, options4)
                     function randomArrayShuffle(array) {
                         var currentIndex = array.length, temporaryValue, randomIndex;
