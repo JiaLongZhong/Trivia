@@ -27,7 +27,7 @@ $(document).ready(function () {
 
                 let totalQuestion = Object.keys(data).length, questionNum = 1, time = 60;
                 let correctAnswer = "", point = 1000, mutiplers = 1, rapidpoint = 0;
-                var totalScore =0;
+                var totalScore = 0;
                 //_questionNum.textContent = questionNum;
                 //_totalQuestion.textContent = totalQuestion;
                 //_totalScore.textContent = totalScore;
@@ -179,6 +179,19 @@ $(document).ready(function () {
                         }, 5000);
 
                         totalScore = Math.round(totalScore);
+                        //send ajax post request to server with totalScore and triviaId to save the score
+                        $.ajax({
+                            url: "score_send.php",
+                            type: "POST",
+                            dataType: "json",
+                            data: {
+                                "score": totalScore.toString(),
+                                "trivia_id": trivia_id.toString()
+                            },
+                            success: function (data) {
+                                console.log(data);
+                            }
+                        });
                         _result.innerHTML += `<p>Your score is ${totalScore}!</p>`;
                         _playAgainBtn.style.display = "block";
                         _checkBtn.style.display = "none";

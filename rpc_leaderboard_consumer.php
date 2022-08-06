@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . '/lib/configrmq.php');
 require_once(__DIR__ . "/lib/helpers.php");
-require_once (__DIR__ . '/vendor/autoload.php');
+require_once(__DIR__ . '/vendor/autoload.php');
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -18,7 +18,7 @@ function LeaderboardSubmit($n)
 	$log_file_name = "leaderboard_consumer.log";
 	echo "pulling from leaderboard_queue\n";
 	write_log("leaderboard Request from: " . $n['user'], $log_file_name);
-	
+
 	$db = getDB();
 	$query = "SELECT
     u.fname,
@@ -32,14 +32,14 @@ JOIN Trivia t ON
 JOIN Users u ON
     s.user_id = u.id
 WHERE
-    s.user_id = :user OR s.user_id =(
+    s.user_id = :user OR s.user_id IN(
     SELECT
         sender_id
     FROM
         Friends
     WHERE
         receiver_id = :user
-) OR s.user_id =(
+) OR s.user_id IN(
     SELECT
         receiver_id
     FROM
@@ -65,7 +65,6 @@ DESC
 			"leaderboard" => $result
 		);
 		write_log("leaderboard sent successfully: " . $n["user"], $log_file_name);
-		
 	} elseif ($e[0] == "23000") {
 		$response = array(
 			"status" => "error",

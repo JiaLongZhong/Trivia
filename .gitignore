@@ -11,3 +11,4 @@ lib/scripts/secretConfigs.sh
 lib/scripts/DBuserMaker.sh
 result.php
 secretConfigs.sh
+.vscode/
