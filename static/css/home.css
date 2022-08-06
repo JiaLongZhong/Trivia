@@ -54,6 +54,9 @@ input[type=submit] {
     background-color: lightblue;
     color: black;
     font-family: "Playfair";
+    border: 5px solid black;
+    margin: 20px;
+    padding: 20px;
 }
 
 .btn btn-primary{
