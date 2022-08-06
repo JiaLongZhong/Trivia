@@ -1,4 +1,4 @@
-<?php 
+<?php
 //api consumer to pull from api and insert into db over question_queue
 
 require_once(__DIR__ . '/lib/configrmq.php');
@@ -17,7 +17,8 @@ echo " [x] Awaiting RPC requests\n";
 function api_call($n)
 {
     $user_id = $n["userid"];
-    $trivia_id = null;
+    $trivia_name = $n["trivia_name"];
+    $data = $n["data"];
     $log_file_name = "api_consumer.log";
     write_log("api_call from: " . $n['admin_email'], $log_file_name);
     echo "[xx] API call made\n";
@@ -28,7 +29,7 @@ function api_call($n)
     $stmt = $db->prepare($query);
     $random_name = uniqid();
     $params = array(
-        "title" => "Trivia " . $random_name,
+        "title" => $trivia_name,
         "description" => "This is a trivia game with " . $n['number_of_questions'] . " questions",
         "visibility" => 0,
         "user_id" => $n['userid']
@@ -52,25 +53,6 @@ function api_call($n)
 
     echo "[xx] Trivia created with id: " . $trivia_id . "\n";
     // send a curl request to the api url
-    $curl = curl_init();
-    curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://opentdb.com/api.php?amount=" . $n["number_of_questions"],
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        //CURLOPT_POSTFIELDS => "apiKey=$api_key&newsSource=$source",
-        CURLOPT_HTTPHEADER => array(
-            "content-type: application/json",
-        ),
-    ));
-    $api_response = curl_exec($curl);
-    $err = curl_error($curl);
-    curl_close($curl);
-    $data = json_decode($api_response, true);
     $question_id = '';
     $check1 = false;
     $check2 = false;
