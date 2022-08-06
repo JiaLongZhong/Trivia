@@ -145,11 +145,12 @@
         require_once(__DIR__ . "/rpc_producer.php");
         $trivia_rpc = new RpcClient();
         $response = json_decode($trivia_rpc->call($trivia_questions, 'custom_trivia_queue'), true);
-        if (isset($response) && $response["status"] == "success") {
-            success_msg("Trivia draft saved successfully");
-            header("Location: create_trivia.php");
-        } else {
+        if (isset($response) && $response["status"] == "error") {
             error_msg("Error saving trivia draft");
+            show_flash_messages();
+        } else {
+            success_msg("Trivia draft saved successfully");
+            show_flash_messages();
         }
     }
     // Publish the trivia game
@@ -158,11 +159,12 @@
         require_once(__DIR__ . "/rpc_producer.php");
         $trivia_rpc = new RpcClient();
         $response = json_decode($trivia_rpc->call($trivia_questions, 'custom_trivia_queue'), true);
-        if (isset($response) && $response["status"] == "success") {
-            success_msg("Trivia published successfully");
-            header("Location: create_trivia.php");
-        } else {
+        if (isset($response) && $response["status"] == "error") {
             error_msg("Error publishing trivia");
+            show_flash_messages();
+        } else {
+            success_msg("Trivia published successfully");
+            show_flash_messages();
         }
     }
 

@@ -152,6 +152,7 @@ function add_custom_questions($n)
                             write_log("Error creating incorrect answer: " . $e[2], $log_file_name);
                         }
                     }
+                    return $response;
                 } else {
                     $response = array(
                         "status" => "error",
@@ -159,13 +160,10 @@ function add_custom_questions($n)
                     );
                     write_log("Question created error: " . $e[2], $log_file_name);
                 }
+                return $response;
             }
         }
     }
-
-
-
-    return $response;
 }
 
 
