@@ -36,8 +36,8 @@ if (!is_logged_in()) {
             </div>
         </div>
     </div>
-    <div class="quiz_container">    
-    <div id="games">
+    <div class="quiz_container">
+        <div id="games">
             <?php
             require_once(__DIR__ . "/rpc_producer.php");
             $trivia_rpc = new RpcClient();
@@ -49,17 +49,17 @@ if (!is_logged_in()) {
             }
             $trivia_games = get_trivia_info();
             ?>
-                <?php foreach ($trivia_games as $trivia_game) : ?>
-                    <!-- list games horizontally -->
-                    <div class="quiz_card">
-                        <div class="quiz_card-body">
-                            <h5 class="card-title"><?php echo $trivia_game["title"]; ?></h5>
-                            <p class="card-text"><?php echo $trivia_game["description"]; ?></p>
-                            <a href="game.php?id=<?php echo $trivia_game["id"]; ?>" class="btn btn-primary">Play</a>
-                        </div>
+            <?php foreach ($trivia_games as $trivia_game) : ?>
+                <!-- list games horizontally -->
+                <div class="quiz_card">
+                    <div class="quiz_card-body">
+                        <h5 class="card-title"><?php echo $trivia_game["title"]; ?></h5>
+                        <p class="card-text"><?php echo $trivia_game["description"]; ?></p>
+                        <a href="triviagame.php?id=<?php echo $trivia_game["id"]; ?>" class="btn btn-primary">Play</a>
                     </div>
-        <?php
-                endforeach; ?>
+                </div>
+            <?php
+            endforeach; ?>
         </div>
     </div>
     <?php include_once(__DIR__ . "/partials/footer.php"); ?>

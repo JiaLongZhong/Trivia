@@ -5,30 +5,22 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Max-Age: 3600");
 require_once(__DIR__ . "/lib/helpers.php");
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    //get the score and trivia id
-    $params = array(
-    $score = $_GET['score'],
-    $user = get_user_id(),
-    $trivia = $_GET['trivia']
+//check for post request from js
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    //get the data from the post request
+    $data = array(
+        "user" => get_user_id(),
+        "trivia_id" => $_POST["trivia_id"],
+        "score" => $_POST["score"]
     );
+    //check if the data is valid
+    //echo the data back to the client
     require_once(__DIR__ . "/rpc_producer.php");
     $score_rpc = new RpcClient();
-    $response = json_decode($trivia_rpc->call($params, 'score_queue'), true);
-    if ($response["status"] == "success") {
-        success_msg("Score sent successfully");
-        #header("Location: create_trivia.php");
+    $response = json_decode($score_rpc->call($data, 'score_queue'), true);
+    if ($response["status"] == "error") {
+        echo json_encode(array("status" => "error", "message" => $response["message"]));
     } else {
-        error_msg("Error sending score");
-        #header("Location: create_trivia.php");
+        echo json_encode(array("status" => "success"));
     }
-
-} else {
-    // $json_object = array(
-    //     "status" => "error",
-    //     "result" => "Invalid request method"
-    // );
-    // echo json_encode($json_object);
-    error_msg("Invalid request method");
 }
-?>

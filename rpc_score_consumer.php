@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . '/lib/configrmq.php');
 require_once(__DIR__ . "/lib/helpers.php");
-require_once (__DIR__ . '/vendor/autoload.php');
+require_once(__DIR__ . '/vendor/autoload.php');
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -23,7 +23,7 @@ function ScoreSubmit($n)
 		":trivia_id" => $n["trivia_id"]
 	);
 	$db = getDB();
-	$query = "INSERT INTO Score(user, trivia_id, score) ";
+	$query = "INSERT INTO Score(user_id, trivia_id, score) ";
 	$query .= "VALUES(:user, :trivia_id, :score)";
 	$stmt = $db->prepare($query);
 	$r = $stmt->execute($params);
@@ -34,12 +34,11 @@ function ScoreSubmit($n)
 			"message" => "Record added successfully"
 		);
 		write_log("score added success: " . $n["user"], $log_file_name);
-		
 	} elseif ($e[0] == "23000") {
 		$response = array(
 			"status" => "error",
 			"message" => "user already exists for that score"
-            #TODO add a check to see if the score is the same as the previous one and if so, don't add it again
+			#TODO add a check to see if the score is the same as the previous one and if so, don't add it again
 		);
 		write_log("score added error: " . $e[2], $log_file_name);
 	} else {
