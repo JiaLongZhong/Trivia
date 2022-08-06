@@ -5,7 +5,7 @@
 ssh $1@$2 /home/$1/scripts/base.sh start $3 $1
  ./migrate.sh /home/$USER/Group/IT490-M22-TBD1/vendor /home/$1/dropoff $1 $2
  ./migrate.sh /home/$USER/Group/IT490-M22-TBD1/lib /home/$1/dropoff $1 $2
- ./migrate.sh /home/$USER/Group/IT490-M22-TBD1/rpc_api_consumer.php /home/$1/dropoff $1 $2
+ ./migrate.sh /home/$USER/Group/IT490-M22-TBD1/rpc_apigetdata_consumer.php /home/$1/dropoff $1 $2
  ./migrate.sh /home/$USER/Group/IT490-M22-TBD1/services/apiconsumer.service /home/$1/dropoff $1 $2
  
 ./migrate.sh /home/$USER/Group/IT490-M22-TBD1/lib/configrmq.ini /home/$1/dropoff $1 $2
