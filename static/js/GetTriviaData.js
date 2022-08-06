@@ -34,7 +34,6 @@ $(document).ready(function () {
 
                 loadQuestion();
 
-
                 function loadQuestion() {
                     _result.innerHTML = "";
                     showQuestion(data);
@@ -129,6 +128,9 @@ $(document).ready(function () {
                 $("#check-answer").on("click", function () {
                     console.log("clicked");
                     checkAnswer();
+                });
+                $("#play-again").on("click", function () {
+                    restartQuiz();
                 });
                 function checkAnswer() {
                     _checkBtn.disabled = false;
