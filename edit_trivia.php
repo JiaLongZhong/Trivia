@@ -174,10 +174,11 @@
         $trivia_rpc = new RpcClient();
         $response = json_decode($trivia_rpc->call($trivia_questions, 'custom_trivia_queue'), true);
         if (isset($response) && $response["status"] == "success") {
-            success_msg("Trivia deleted successfully");
-            header("Location: create_trivia.php");
+            success_msg("Trivia deleted successfully, Please log back in to remove it from the list");
+            show_flash_messages();
         } else {
             error_msg("Error deleting trivia");
+            show_flash_messages();
         }
     }
     ?>
